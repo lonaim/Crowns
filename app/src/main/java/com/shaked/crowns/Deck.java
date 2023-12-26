@@ -3,13 +3,14 @@ package com.shaked.crowns;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
+import java.util.Stack;
 
 public class Deck {
-    private LinkedList<Card> deck;//חפיסת קלפים
+    private Stack<Card> deck;//חפיסת קלפים
 
     /*פעולה בונה*/
     public Deck() {
-        this.deck = new LinkedList<Card>();
+        this.deck = new Stack<Card>();
         fill();
     }
 
@@ -26,20 +27,20 @@ public class Deck {
             //the numbers
             for (int j=1;j<=11;j++){
                 switch (i){
-                    case 1:this.deck.add(new Card(j,"c"));
+                    case 1:this.deck.push(new Card(j,"c"));
                     break;
-                    case 2: this.deck.add(new Card(j,"d"));
+                    case 2: this.deck.push(new Card(j,"d"));
                     break;
-                    case 3: this.deck.add(new Card(j,"h"));
+                    case 3: this.deck.push(new Card(j,"h"));
                     break;
-                    case 4: this.deck.add(new Card(j,"s"));
+                    case 4: this.deck.push(new Card(j,"s"));
                     break;
                 }
             }
-            this.deck.add(new Card(12,"s"));
-            this.deck.add(new Card(12,"s"));
-            this.deck.add(new Card(13,"d"));
-            this.deck.add(new Card(13,"d"));
+            this.deck.push(new Card(12,"s"));
+            this.deck.push(new Card(12,"s"));
+            this.deck.push(new Card(13,"d"));
+            this.deck.push(new Card(13,"d"));
 
         }
     }
@@ -47,23 +48,23 @@ public class Deck {
 
     //מוסיפה קלף
     public void addCard(Card card){
-        this.deck.add(card);
+        this.deck.push(card);
     }
 
     //מוציא קלף מהחפיסה
     public Card removeCard(){
-        Card card = this.deck.remove();
+        Card card = this.deck.pop();
         return card;
     }
 
     //מערבב את החפישה
     public void shuffle(){
-        Card[] arr = new Card[48];
+        Card[] arr = new Card[deck.size()];
         Random rnd = new Random();
 
-        //ממיר את התור למערך
+        //ממיר את המחסנית למערך
         for(int i=0;i<arr.length;i++){
-            arr[i] = this.deck.remove();
+            arr[i] = this.deck.pop();
         }
 
         //מערבב את המערך, עם משתנה מילו
@@ -74,19 +75,24 @@ public class Deck {
             arr[randomPOs] = temp;
         }
 
-        //מחזיר את הקלפים לתור
+        //מחזיר את הקלפים למחסנית
         for(int i=0;i<arr.length;i++){
-            this.deck.add(arr[i]);
+            this.deck.push(arr[i]);
         }
+    }
+
+    public Deck cloneDeck(){
+        Deck newDeck = (Deck) deck.clone();
+        return newDeck;
     }
 
     @Override
     public String toString(){
         String str="{"+'\n';
-        for (int i =0;i<48;i++){
-            Card temp = this.deck.remove();
+        for (int i =0;i<deck.size();i++){
+            Card temp = this.deck.pop();
             str+=temp.toString()+'\n';
-            this.deck.add(temp);
+            this.deck.push(temp);
         }
         return str;
     }
