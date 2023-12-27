@@ -17,11 +17,22 @@ public class GameManager {
         activity = activity;
         this.gameDeck = new Deck();
         this.gameDeck.shuffle();
-
+        this.burnDeck = new Deck();
         this.deckCard = new Card(0, "");
         this.players = new Player[2];
         players[0] = new Player("Player 1", new Siege(new Card(12,"c"), new Card(11,"c"), gameDeck));
         players[1] = new Player("Player 2", new Siege(new Card(12,"h"), new Card(11,"h"), gameDeck));
+        this.kTurn = 0;
+    }
+
+    public void resetGame(){
+        this.gameDeck = new Deck();
+        this.gameDeck.shuffle();
+        this.burnDeck = new Deck();
+        this.deckCard = new Card(0, "");
+        this.players = new Player[2];
+        players[0] = new Player(players[0].getName(), new Siege(new Card(12,"c"), new Card(11,"c"), gameDeck));
+        players[1] = new Player(players[1].getName(), new Siege(new Card(12,"h"), new Card(11,"h"), gameDeck));
         this.kTurn = 0;
     }
 
