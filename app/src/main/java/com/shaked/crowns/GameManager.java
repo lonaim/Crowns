@@ -20,7 +20,7 @@ public class GameManager {
         this.gameDeck = new Deck();
         this.gameDeck.shuffle();
         this.burnDeck = new Deck();
-        this.deckCard = new Card(0, "");
+        this.deckCard = null;
         this.players = new Player[2];
         players[0] = new Player("Player 1", new Siege(new Card(13,"c"), new Card(12,"c"), gameDeck));
         players[1] = new Player("Player 2", new Siege(new Card(13,"h"), new Card(12,"h"), gameDeck));
@@ -31,7 +31,7 @@ public class GameManager {
         this.gameDeck = new Deck();
         this.gameDeck.shuffle();
         this.burnDeck = new Deck();
-        this.deckCard = new Card(0, "");
+        this.deckCard = null;
         this.players = new Player[2];
         players[0] = new Player(players[0].getName(), new Siege(new Card(12,"c"), new Card(11,"c"), gameDeck));
         players[1] = new Player(players[1].getName(), new Siege(new Card(12,"h"), new Card(11,"h"), gameDeck));

@@ -4,254 +4,261 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GameActivity">
+    tools:context=".GameActivity"
+    android:background="@drawable/bggame">
 
-    <!--for btnBack-->
-    <RelativeLayout
+    <!--Layout for deck and srufim-->
+
+    <!--Siege for Player 2-->
+
+    <!--Siege for Player 1-->
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/siege_p1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/siege_p2"
+        tools:ignore="MissingConstraints">
 
-        <!--Layout for deck and srufim-->
+        <ImageButton
+            android:id="@+id/srufim"
+            android:layout_width="50dp"
+            android:layout_height="70dp"
+            android:background="@drawable/srufim" />
+
+        <ImageButton
+            android:id="@+id/useCard"
+            android:layout_width="50dp"
+            android:layout_height="70dp"
+            android:layout_margin="75dp"
+            android:background="#00FFFFFF"/>
+
+
+        <ImageButton
+            android:id="@+id/deck"
+            android:layout_width="50dp"
+            android:layout_height="70dp"
+            android:background="@drawable/deck" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/siege_p2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="20dp"
+        android:gravity="top|center_vertical|center_horizontal|center"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp">
+
+        <!--Line King and Queen for player 2-->
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:gravity="center_vertical|start"
-            android:orientation="horizontal"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="248dp">
+            android:id="@+id/lineQK_p2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="3dp"
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/deck"
+                android:id="@+id/card7_p2"
                 android:layout_width="50dp"
                 android:layout_height="70dp"
-                android:layout_marginStart="290dp"
-                android:background="@drawable/deck" />
+                android:layout_weight="1"
+                android:background="@drawable/back" />
 
             <ImageButton
-                android:id="@+id/srufim"
+                android:id="@+id/card8_p2"
                 android:layout_width="50dp"
                 android:layout_height="70dp"
-                android:layout_marginStart="-310dp"
-                android:background="@drawable/srufim" />
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:background="@drawable/back" />
         </LinearLayout>
-
-        <!--Siege for Player 2-->
-
-        <!--Siege for Player 1-->
-
+        <!--Line2_for player 2-->
         <LinearLayout
-            android:id="@+id/siege_p2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginBottom="457dp"
-            android:gravity="top|center_vertical|center_horizontal|center"
-            android:orientation="vertical"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="16dp">
+            android:id="@+id/line2_p2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="3dp"
+            android:orientation="horizontal">
 
-            <!--Line King and Queen for player 2-->
-            <LinearLayout
-                android:id="@+id/lineQK_p2"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="50dp"
-                android:layout_marginEnd="50dp"
-                android:layout_marginBottom="0dp"
-                android:gravity="center"
-                android:orientation="horizontal">
+            <ImageButton
+                android:id="@+id/card3_p2"
+                android:layout_width="50dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:background="@drawable/back" />
 
-                <ImageButton
-                    android:id="@+id/card7_p2"
-                    android:layout_width="50dp"
-                    android:layout_height="70dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/back" />
+            <ImageButton
+                android:id="@+id/card4_p2"
+                android:layout_width="50dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:background="@drawable/back" />
 
-                <ImageButton
-                    android:id="@+id/card8_p2"
-                    android:layout_width="50dp"
-                    android:layout_height="70dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/back" />
-            </LinearLayout>
-            <!--Line2_for player 2-->
-            <LinearLayout
-                android:id="@+id/line2_p2"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+            <ImageButton
+                android:id="@+id/card5_p2"
+                android:layout_width="50dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:background="@drawable/back" />
 
-                <ImageButton
-                    android:id="@+id/card3_p2"
-                    android:layout_width="50dp"
-                    android:layout_height="70dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/back" />
-
-                <ImageButton
-                    android:id="@+id/card4_p2"
-                    android:layout_width="50dp"
-                    android:layout_height="70dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/back" />
-
-                <ImageButton
-                    android:id="@+id/card5_p2"
-                    android:layout_width="50dp"
-                    android:layout_height="70dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/back" />
-
-                <ImageButton
-                    android:id="@+id/card6_p2"
-                    android:layout_width="50dp"
-                    android:layout_height="70dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/back" />
-            </LinearLayout>
-
-            <!--Line1_for player 2-->
-            <LinearLayout
-                android:id="@+id/line1_p2"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:id="@+id/card0_p2"
-                    android:layout_width="50dp"
-                    android:layout_height="70dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/back" />
-
-                <ImageButton
-                    android:id="@+id/card1_p2"
-                    android:layout_width="50dp"
-                    android:layout_height="70dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/back" />
-
-                <ImageButton
-                    android:id="@+id/card2_p2"
-                    android:layout_width="50dp"
-                    android:layout_height="70dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/back" />
-            </LinearLayout>
+            <ImageButton
+                android:id="@+id/card6_p2"
+                android:layout_width="50dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:background="@drawable/back" />
         </LinearLayout>
 
+        <!--Line1_for player 2-->
         <LinearLayout
-            android:id="@+id/siege_p1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="2dp"
-            android:layout_marginBottom="68dp"
-            android:gravity="top|center_vertical|center_horizontal|center"
-            android:orientation="vertical"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="25dp"
-            tools:layout_editor_absoluteY="340dp">
+            android:id="@+id/line1_p2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="3dp"
+            android:orientation="horizontal">
 
-            <!--Line1_for player 1-->
-            <LinearLayout
-                android:id="@+id/line1_p1"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+            <ImageButton
+                android:id="@+id/card0_p2"
+                android:layout_width="50dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:background="@drawable/back" />
 
-                <ImageButton
-                    android:id="@+id/card0_p1"
-                    android:layout_width="50dp"
-                    android:layout_height="70dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/back" />
+            <ImageButton
+                android:id="@+id/card1_p2"
+                android:layout_width="50dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:background="@drawable/back" />
 
-                <ImageButton
-                    android:id="@+id/card1_p1"
-                    android:layout_width="50dp"
-                    android:layout_height="70dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/back" />
+            <ImageButton
+                android:id="@+id/card2_p2"
+                android:layout_width="50dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:background="@drawable/back" />
+        </LinearLayout>
+    </LinearLayout>
 
-                <ImageButton
-                    android:id="@+id/card2_p1"
-                    android:layout_width="50dp"
-                    android:layout_height="70dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/back" />
-            </LinearLayout>
+    <LinearLayout
+        android:id="@+id/siege_p1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:gravity="top|center_vertical|center_horizontal|center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="56dp">
 
-            <!--Line2_for player 1-->
-            <LinearLayout
-                android:id="@+id/line2_p1"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+        <!--Line1_for player 1-->
+        <LinearLayout
+            android:id="@+id/line1_p1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="3dp"
+            android:orientation="horizontal">
 
-                <ImageButton
-                    android:id="@+id/card3_p1"
-                    android:layout_width="50dp"
-                    android:layout_height="70dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/back" />
+            <ImageButton
+                android:id="@+id/card0_p1"
+                android:layout_width="50dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:background="@drawable/back" />
 
-                <ImageButton
-                    android:id="@+id/card4_p1"
-                    android:layout_width="50dp"
-                    android:layout_height="70dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/back" />
+            <ImageButton
+                android:id="@+id/card1_p1"
+                android:layout_width="50dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:background="@drawable/back" />
 
-                <ImageButton
-                    android:id="@+id/card5_p1"
-                    android:layout_width="50dp"
-                    android:layout_height="70dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/back" />
-
-                <ImageButton
-                    android:id="@+id/card6_p1"
-                    android:layout_width="50dp"
-                    android:layout_height="70dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/back" />
-            </LinearLayout>
-
-            <!--Line King and Queen for player 1-->
-            <LinearLayout
-                android:id="@+id/lineQK_p1"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="50dp"
-                android:layout_marginEnd="50dp"
-                android:layout_marginBottom="12dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:id="@+id/card7_p1"
-                    android:layout_width="50dp"
-                    android:layout_height="70dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/back" />
-
-                <ImageButton
-                    android:id="@+id/card8_p1"
-                    android:layout_width="50dp"
-                    android:layout_height="70dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/back" />
-            </LinearLayout>
+            <ImageButton
+                android:id="@+id/card2_p1"
+                android:layout_width="50dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:background="@drawable/back" />
         </LinearLayout>
 
-    </RelativeLayout>
+        <!--Line2_for player 1-->
+        <LinearLayout
+            android:id="@+id/line2_p1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="3dp"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/card3_p1"
+                android:layout_width="50dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:background="@drawable/back" />
+
+            <ImageButton
+                android:id="@+id/card4_p1"
+                android:layout_width="50dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:background="@drawable/back" />
+
+            <ImageButton
+                android:id="@+id/card5_p1"
+                android:layout_width="50dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:background="@drawable/back" />
+
+            <ImageButton
+                android:id="@+id/card6_p1"
+                android:layout_width="50dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:background="@drawable/back" />
+        </LinearLayout>
+
+        <!--Line King and Queen for player 1-->
+        <LinearLayout
+            android:id="@+id/lineQK_p1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="12dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/card7_p1"
+                android:layout_width="50dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:background="@drawable/back" />
+
+            <ImageButton
+                android:id="@+id/card8_p1"
+                android:layout_width="50dp"
+                android:layout_height="70dp"
+                android:layout_weight="1"
+                android:background="@drawable/back" />
+        </LinearLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
