@@ -8,9 +8,9 @@ public class Siege {
     private ArrayList<Tower> line2;
 
     /*==פעולה בונה==*/
-    public Siege(Card kTurn, Card q, Deck deck) {
+    public Siege(Card k, Card q, Deck deck) {
         qk = new ArrayList<Tower>();
-        qk.add(new Tower(kTurn));
+        qk.add(new Tower(k));
         qk.add(new Tower(q));
 
         line1 = new ArrayList<Tower>();

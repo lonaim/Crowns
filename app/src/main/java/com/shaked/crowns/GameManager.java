@@ -200,4 +200,44 @@ public class GameManager {
         return false;
     }
 
+    public String giveCard(int i, int sage){
+        ArrayList<Tower> line;
+        Card card = new Card(0,"");
+        switch (sage) {
+            case 1:
+                if(i < 3) {/*line 1*/
+                    line = getPlayerTurn().getSiege().getLine1();
+                    card = line.get(i).getCard();
+                }/*end of line 1*/
+
+                if(i >= 3 && i < 7) {/*line 2*/
+                    line = getPlayerTurn().getSiege().getLine2();
+                    card = line.get(i-3).getCard();
+                }/*end of line 2*/
+
+                if(i >= 7 && i < 9) {/*line 3*/
+                    line = getPlayerTurn().getSiege().getQk();
+                    card =  line.get(i-7).getCard();
+                }/*end of line 3*/
+                break;
+            case 2:
+                if(i < 3) {/*line 1*/
+                    line = getPlayerNotTurn().getSiege().getLine1();
+                    card = line.get(i).getCard();
+                }/*end of line 1*/
+
+                if(i >= 3 && i < 7) {/*line 2*/
+                    line = getPlayerNotTurn().getSiege().getLine2();
+                    card = line.get(i-3).getCard();
+                }/*end of line 2*/
+
+                if(i >= 7 && i < 9) {/*line 3*/
+                    line = getPlayerNotTurn().getSiege().getQk();
+                    card =  line.get(i-7).getCard();
+                }/*end of line 3*/
+                break;
+        }//end of switch
+        return card.toString();
+    }
+
 }

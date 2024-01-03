@@ -29,6 +29,10 @@ public class Player {
         this.siege = siege;
     }
 
+    public boolean isFinalRound(){
+        return this.siege.isLine1Empty() && this.siege.isLine2Empty();
+    }
+
     /*To String*/
     @Override
     public String toString() {
