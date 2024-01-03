@@ -66,17 +66,6 @@ public class GameActivity extends Activity implements TextView.OnClickListener {
         /*reload the texture*/
         reloadTexture();
 
-        /*שינוי שמות*/
-        Intent in = getIntent();
-        if (in != null) {
-            Bundle xBundle = in.getExtras();
-            String strData1 = xBundle.getString("data1");
-            String strData2 = xBundle.getString("data2");
-            Log.d("****** in in ",strData1);
-            Log.d("****** in in ",strData2);
-            game.setPlayersName(strData1, strData2);
-        }
-
         Toast.makeText(this,game.getPlayerTurn().getName() + "'s Turn",Toast.LENGTH_SHORT).show();
         //battery
     }
