@@ -132,14 +132,14 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/card0_p2"
+                android:id="@+id/card1_p2"
                 android:layout_width="50dp"
                 android:layout_height="70dp"
                 android:layout_weight="1"
                 android:background="@drawable/back" />
 
             <ImageButton
-                android:id="@+id/card1_p2"
+                android:id="@+id/card0_p2"
                 android:layout_width="50dp"
                 android:layout_height="70dp"
                 android:layout_weight="1"
@@ -176,14 +176,14 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/card0_p1"
+                android:id="@+id/card1_p1"
                 android:layout_width="50dp"
                 android:layout_height="70dp"
                 android:layout_weight="1"
                 android:background="@drawable/back" />
 
             <ImageButton
-                android:id="@+id/card1_p1"
+                android:id="@+id/card0_p1"
                 android:layout_width="50dp"
                 android:layout_height="70dp"
                 android:layout_weight="1"

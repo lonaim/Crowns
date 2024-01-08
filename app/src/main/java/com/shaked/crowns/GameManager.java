@@ -105,10 +105,16 @@ public class GameManager {
         else this.kTurn = 0;
     }
 
+    public void pickCard(){
+        if(gameDeck.getSize()>0)
+            setDeckCard(gameDeck.removeCard());
+    }
+
     //get a card and put it in the burn deck
     public void doBurn(Card burnCard) {
         burnDeck.addCard(burnCard);
     }
+
 
     //use - reset the deck after all burn
     //move all the cards from the burn deck to the game deck
@@ -198,6 +204,26 @@ public class GameManager {
             }/*end of line 3*/
         }
         return false;
+    }
+
+    public Card returnCard(int i){
+        ArrayList<Tower> line;
+        Card card = new Card(0,"");
+        if(i < 3) {/*line 1*/
+            line = getPlayerTurn().getSiege().getLine1();
+            card = line.get(i).getCard();
+        }/*end of line 1*/
+
+        if(i >= 3 && i < 7) {/*line 2*/
+            line = getPlayerTurn().getSiege().getLine2();
+            card = line.get(i-3).getCard();
+        }/*end of line 2*/
+
+        if(i >= 7 && i < 9) {/*line 3*/
+            line = getPlayerTurn().getSiege().getQk();
+            card = line.get(i-7).getCard();
+        }/*end of line 3*/
+        return (card);
     }
 
 }
