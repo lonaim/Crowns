@@ -37,7 +37,7 @@ public class Siege {
         Card c; //קלף מהחפיסה
         Tower[] temp = new Tower[7]; //חפיסה זמנית
         int place = 0;//מיקום הקלף הדומה
-        int count = 0;
+        int count = 0;//מה ההמקום האחרון שהוכנס
 
         //אתחול מערך זמין
         for (int i = 0; i < temp.length; i++) {

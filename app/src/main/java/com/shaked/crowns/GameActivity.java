@@ -38,6 +38,7 @@ public class GameActivity extends Activity implements TextView.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         cardFromDeck = (ImageButton) findViewById(R.id.useCard);
+        cardFromDeck.setOnClickListener(this);
         deck = (ImageButton) findViewById(R.id.deck);
         deck.setOnClickListener(this);
         srufim = (ImageButton) findViewById(R.id.srufim);
@@ -158,7 +159,7 @@ public class GameActivity extends Activity implements TextView.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        for (int i = 0; i < cardsP1.length; i++)//עובר עם מבצר 1
+        /*for (int i = 0; i < cardsP1.length; i++)//עובר עם מבצר 1
             if (cardsP1[i] == view) {
                 Toast.makeText(this, game.returnCard(i).toString(), Toast.LENGTH_SHORT).show();
                 ;
@@ -166,6 +167,73 @@ public class GameActivity extends Activity implements TextView.OnClickListener {
         for (int j = 0; j < cardsP2.length; j++)//עובר על מבצר 2
             if (cardsP2[j] == view) {
                 Toast.makeText(this, game.returnCard(j).toString(), Toast.LENGTH_SHORT).show();
+            }*/
+
+
+        ImageButton btn = (ImageButton) view;
+        final int RESDEF = R.drawable.back; //כתובת של קלף הפוך
+
+        int res; //כתובת קלף הפוך
+        boolean isTapDeck = game.getDeckCard() != null;
+        int id = btn.getId();
+        Card cardPress = new Card(0, "");
+
+        if (R.id.deck == id) {
+            if (!isTapDeck && game.getDeckGame().getSize() < 1)
+                Toast.makeText(this, "The Deck is Empty!", Toast.LENGTH_SHORT).show();
+            else if (!isTapDeck) {
+                game.pickCard();
+                num = game.getDeckCard().getNum();
+                shape = game.getDeckCard().getShape();
+
+                res = cardFromDeck.getResources().getIdentifier("card" + shape + num, "drawable", getPackageName());
+                cardFromDeck.setBackgroundResource(res);
+            } else {
+                Toast.makeText(this, "You have card", Toast.LENGTH_SHORT).show();
             }
+        } else if (R.id.srufim == id) {
+            if (isTapDeck) {
+                game.doBurn(game.getDeckCard());
+                game.setDeckCard(null);
+                game.nextTurn();
+
+            } else {
+                Toast.makeText(this, "Take card from deck", Toast.LENGTH_LONG).show();
+            }
+        }
+        else {
+            if(isTapDeck){
+                    for (int i = 0; i < cardsP1.length; i++) {
+                        if (cardsP1[i] == view) {
+                            cardPress = game.returnCard(i, 0);
+                            if (cardPress.getNum() == game.getDeckCard().getNum()) {
+                                Toast.makeText(this, "can be fortify", Toast.LENGTH_LONG).show();
+                                game.makeATurn(i, 2);
+                            }
+                        }
+                    }
+
+                    for (int j = 0; j < cardsP2.length; j++) {
+                        if (cardsP2[j] == view) {
+                            cardPress = game.returnCard(j, 1);
+
+                            if(game.getDeckCard().getNum() - cardPress.getNum() == 1 || (game.getDeckCard().equalsNum(1) && game.getDeckCard().getNum() - cardPress.getNum() == -12)){
+                                Toast.makeText(this, "can be atteck", Toast.LENGTH_LONG).show();
+                                game.makeATurn(j,3);
+                            }
+                        }
+                    }
+            }
+        }
+        reloadTexture();
+    }
+
+    //פעולה שעוברת אקטיביטי עם יש ניצחון ומעבירה את שם המנצח
+    public void isWon(){
+        //בודק ניצחון
+        if(game.getPlayerNotTurn().getSiege().isEmpty()){
+            Toast.makeText(this,game.getPlayerTurn().getName()+" WON",Toast.LENGTH_LONG).show();
+        }
+
     }
 }
