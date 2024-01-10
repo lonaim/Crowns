@@ -21,6 +21,7 @@ public class GameActivity extends Activity implements TextView.OnClickListener {
     private ImageButton[] cardsP2; //מבצר של שחקן 2
     private ImageButton cardFromDeck; //קלף מהקופה
     private ImageButton deck; //הקופה
+    private boolean isFlipped = false;
     private ImageButton srufim; //חפיסת השרופים
 
     GameManager game; // מנהל משחק
@@ -154,6 +155,7 @@ public class GameActivity extends Activity implements TextView.OnClickListener {
                 cardsP2[7].setClickable(true);
                 cardsP2[8].setClickable(true);
             }
+
         }
     }//סוגר פעולה
 
@@ -202,27 +204,35 @@ public class GameActivity extends Activity implements TextView.OnClickListener {
             }
         }
         else {
-            if(isTapDeck){
+            if(isTapDeck) {
+                if (game.getK() == 0) {
                     for (int i = 0; i < cardsP1.length; i++) {
                         if (cardsP1[i] == view) {
-                            cardPress = game.returnCard(i, 0);
-                            if (cardPress.getNum() == game.getDeckCard().getNum()) {
-                                Toast.makeText(this, "can be fortify", Toast.LENGTH_LONG).show();
-                                game.makeATurn(i, 2);
-                            }
+                            if(game.makeATurn(i, 2))game.nextTurn();
                         }
                     }
 
                     for (int j = 0; j < cardsP2.length; j++) {
                         if (cardsP2[j] == view) {
-                            cardPress = game.returnCard(j, 1);
-
-                            if(game.getDeckCard().getNum() - cardPress.getNum() == 1 || (game.getDeckCard().equalsNum(1) && game.getDeckCard().getNum() - cardPress.getNum() == -12)){
-                                Toast.makeText(this, "can be atteck", Toast.LENGTH_LONG).show();
-                                game.makeATurn(j,3);
-                            }
+                            if(game.makeATurn(j, 3))game.nextTurn();
                         }
                     }
+                }
+                else {
+                    for (int i = 0; i < cardsP2.length; i++) {
+                        if (cardsP2[i] == view) {
+                            if(game.makeATurn(i, 2))game.nextTurn();
+                            ;
+                        }
+                    }
+
+                    for (int j = 0; j < cardsP1.length; j++) {
+                        if (cardsP1[j] == view) {
+                            if(game.makeATurn(j, 3))game.nextTurn();
+                            ;
+                        }
+                    }
+                }
             }
         }
         reloadTexture();
@@ -235,5 +245,14 @@ public class GameActivity extends Activity implements TextView.OnClickListener {
             Toast.makeText(this,game.getPlayerTurn().getName()+" WON",Toast.LENGTH_LONG).show();
         }
 
+    }
+
+    private void flipImageButton(ImageButton imageButton) {
+        if (isFlipped) {
+            imageButton.setRotation(0); // Reset rotation to 0 degrees
+        } else {
+            imageButton.setRotation(180); // Rotate 180 degrees
+        }
+        isFlipped = !isFlipped; // Toggle the flipped state
     }
 }

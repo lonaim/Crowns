@@ -170,36 +170,32 @@ public class GameManager {
 
         if (deckCard != null && gameDeck.getSize() != 0) {
             if (i < 3) {/*line 1*/
-                line = players[0].getSiege().getLine1();
-                enemyLine = players[1].getSiege().getLine1();
+                line = getPlayerTurn().getSiege().getLine1();
+                enemyLine = getPlayerNotTurn().getSiege().getLine1();
                 switch (action) {
                     case 2://fortify
-                        if (!line.get(i).isFull()) {
                             if (line.get(i).getCard().equalsNum(deckCard.getNum())) {
+                                if (!line.get(i).isFull()) {
                                 line.get(i).addCard(deckCard);
                                 deckCard = null;
-                                return true;
+                                return true;}
                             } else if (line.get(i).getCard().equalsNum(0) && deckCard.equalsNum(1)) {
                                 line.get(i).getCard().setNum(1);
                                 line.get(i).getCard().setShape(deckCard.getShape());
                                 deckCard = null;
                                 return true;
-                            }
                         }
                     case 3:
-                        if(enemyLine.get(i).getCard().equalsNum(deckCard.getNum()-1)||(enemyLine.get(i).getCard().equalsNum(13)&&deckCard.equalsNum(1))){
-                                doBurn(enemyLine.get(i).removeCard());
-                                doBurn(deckCard);
-                                deckCard = null;
-                                if(enemyLine.get(i).getSize()==0){
-                                    enemyLine.get(i).addCard(new Card(0,""));
-                                }
+                        if (deckCard.getNum() - enemyLine.get(i).getCard().getNum() == 1 || (deckCard.equalsNum(1) && deckCard.getNum() - enemyLine.get(i).getCard().getNum() == -12)) {
+                            doBurn(enemyLine.get(i).removeCard());
+                            doBurn(deckCard);
+                            deckCard = null;
+                            if (enemyLine.get(i).getSize() == 0) {
+                                enemyLine.get(i).addCard(new Card(0, ""));
                             }
-                        return true;
                         }
-                        return false;
-
-                }//end of switch
+                        return true;
+                }
             }/*end of line 1*/
 
             if (i >= 3 && i < 7) {/*line 2*/
@@ -220,27 +216,38 @@ public class GameManager {
                             }
                         }
                     case 3:
-                        if(enemyLine.get(i-3).getCard().equalsNum(deckCard.getNum()-1)||(enemyLine.get(i-3).getCard().equalsNum(13)&&deckCard.equalsNum(1))){
+                        if (deckCard.getNum() - enemyLine.get(i-3).getCard().getNum() == 1 || (deckCard.equalsNum(1) && deckCard.getNum() - enemyLine.get(i-3).getCard().getNum() == -12)) {
                             doBurn(enemyLine.get(i-3).removeCard());
                             doBurn(deckCard);
                             deckCard = null;
-                            if(enemyLine.get(i-3).getSize()==0){
-                                enemyLine.get(i-3).addCard(new Card(0,""));
+                            if (enemyLine.get(i-3).getSize() == 0) {
+                                enemyLine.get(i-3).addCard(new Card(0, ""));
                             }
                         }
                         return true;
                 }
                 return false;
 
-                }
-                if (i >= 7 && i < 9) {/*line 3*/
-                    line = getPlayerTurn().getSiege().getQk();
-                    enemyLine = getPlayerNotTurn().getSiege().getQk();
-                    switch (action) {
-                        case 2://fortify
-                            return false;
-                    }//end of switch
-                }/*end of line 3*/
+            }
+            if (i >= 7 && i < 9) {/*line 3*/
+                line = getPlayerTurn().getSiege().getQk();
+                enemyLine = getPlayerNotTurn().getSiege().getQk();
+                switch (action) {
+                    case 2://fortify
+                        return false;
+                    case 3:
+                        if (deckCard.getNum() - enemyLine.get(i-7).getCard().getNum() == 1 || (deckCard.equalsNum(1) && deckCard.getNum() - enemyLine.get(i-7).getCard().getNum() == -12)) {
+                            doBurn(enemyLine.get(i-7).removeCard());
+                            doBurn(deckCard);
+                            deckCard = null;
+                            if (enemyLine.get(i-7).getSize() == 0) {
+                                enemyLine.get(i-7).addCard(new Card(0, ""));
+                            }
+                        }
+                        return true;
+                }//end of switch
+            }/*end of line 3*/
+        }
             return false;
         }
 
