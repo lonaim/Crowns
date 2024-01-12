@@ -121,44 +121,11 @@ public class GameManager {
     //use - reset the deck after all burn
     //move all the cards from the burn deck to the game deck
     public void resetDeckAfterAllBurn() {
-        gameDeck = burnDeck.cloneDeck();
-        burnDeck = new Deck();
+        for(int i=0;i<burnDeck.getSize();i++){
+            gameDeck.addCard(burnDeck.removeCard());
+        }
         gameDeck.shuffle();
     }
-
-    /*actions player can do*/
-
-    //atteck action
-    public void doAtteck(Tower towerDiffend){
-        Card towerCard = towerDiffend.getCard();
-        
-        if((deckCard.equalsNum(1) && towerCard.equalsNum(13))
-                ||(deckCard.equalsNum(towerCard.getNum()+1))){
-                //towerDiffend.removeCard();
-                //doBurn(deckCard);
-                //doBurn(towerCard);
-            Toast.makeText(activity, "can be atteck", Toast.LENGTH_SHORT).show();
-                if(towerDiffend.getSize() == 0){
-                    towerDiffend=new Tower(new Card(0,""));
-                }
-        }
-    }
-
-    //fortify action
-    public void dofortify(Tower tower) {
-        Card towerCard = tower.getCard();
-        if (!tower.isFull()) {
-            if (tower.getCard().equalsNum(deckCard.getNum())) {
-                tower.addCard(deckCard);
-                deckCard = null;
-            } else if (tower.getCard().equalsNum(0) && deckCard.equalsNum(1)) {
-                tower.getCard().setNum(1);
-                tower.getCard().setShape(deckCard.getShape());
-                deckCard = null;
-            }
-        }
-    }
-
 
     /*turn action*/
 

@@ -24,7 +24,7 @@ public class GameActivity extends Activity implements TextView.OnClickListener {
     private boolean isFlipped = false;
     private ImageButton srufim; //חפיסת השרופים
 
-    GameManager game; // מנהל משחק
+    public static GameManager game; // מנהל משחק
 
     int rePlace; //שמירת מיקום קלף במבצר
 
@@ -178,15 +178,20 @@ public class GameActivity extends Activity implements TextView.OnClickListener {
         int res; //כתובת קלף הפוך
         boolean isTapDeck = game.getDeckCard() != null;
         int id = btn.getId();
+        boolean doTurn = true;
         Card cardPress = new Card(0, "");
 
         if (R.id.deck == id) {
-            if (!isTapDeck && game.getDeckGame().getSize() < 1)
-                Toast.makeText(this, "The Deck is Empty!", Toast.LENGTH_SHORT).show();
+            if (!isTapDeck && game.getDeckGame().getSize() < 1){
+                Toast.makeText(this, "The Deck is Empty! - the system resting the Deck", Toast.LENGTH_SHORT).show();
+                game.resetDeckAfterAllBurn();
+                game.pickCard();
+            }
             else if (!isTapDeck) {
                 game.pickCard();
                 num = game.getDeckCard().getNum();
                 shape = game.getDeckCard().getShape();
+                doTurn=false;
 
                 res = cardFromDeck.getResources().getIdentifier("card" + shape + num, "drawable", getPackageName());
                 cardFromDeck.setBackgroundResource(res);
@@ -236,6 +241,10 @@ public class GameActivity extends Activity implements TextView.OnClickListener {
             }
         }
         reloadTexture();
+        /*if(doTurn)
+            Toast.makeText(this,game.getPlayerTurn().getName() + "'s Turn",Toast.LENGTH_SHORT).show();*/
+        isWon();
+
     }
 
     //פעולה שעוברת אקטיביטי עם יש ניצחון ומעבירה את שם המנצח
@@ -243,8 +252,10 @@ public class GameActivity extends Activity implements TextView.OnClickListener {
         //בודק ניצחון
         if(game.getPlayerNotTurn().getSiege().isEmpty()){
             Toast.makeText(this,game.getPlayerTurn().getName()+" WON",Toast.LENGTH_LONG).show();
-        }
-
+            String playerWon =  game.getPlayerTurn().getName();
+                Intent go = new Intent(this,WinActivity.class);
+                go.putExtra("PLAYER_NAME",playerWon);
+                startActivity(go);}
     }
 
     private void flipImageButton(ImageButton imageButton) {

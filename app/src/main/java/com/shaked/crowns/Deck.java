@@ -81,11 +81,6 @@ public class Deck {
         }
     }
 
-    public Deck cloneDeck(){
-        Deck newDeck = (Deck) deck.clone();
-        return newDeck;
-    }
-
     @Override
     public String toString(){
         String str="{"+'\n';
