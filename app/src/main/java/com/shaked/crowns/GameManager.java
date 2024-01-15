@@ -160,8 +160,8 @@ public class GameManager {
                             if (enemyLine.get(i).getSize() == 0) {
                                 enemyLine.get(i).addCard(new Card(0, ""));
                             }
+                            return true;
                         }
-                        return true;
                 }
             }/*end of line 1*/
 
@@ -190,11 +190,9 @@ public class GameManager {
                             if (enemyLine.get(i-3).getSize() == 0) {
                                 enemyLine.get(i-3).addCard(new Card(0, ""));
                             }
+                            return true;
                         }
-                        return true;
                 }
-                return false;
-
             }
             if (i >= 7 && i < 9) {/*line 3*/
                 line = getPlayerTurn().getSiege().getQk();
@@ -210,8 +208,8 @@ public class GameManager {
                             if (enemyLine.get(i-7).getSize() == 0) {
                                 enemyLine.get(i-7).addCard(new Card(0, ""));
                             }
+                            return true;
                         }
-                        return true;
                 }//end of switch
             }/*end of line 3*/
         }

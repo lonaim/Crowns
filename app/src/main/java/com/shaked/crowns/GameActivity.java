@@ -32,8 +32,10 @@ public class GameActivity extends Activity implements TextView.OnClickListener {
     String shape;
 
     boolean isDone;
+    Player p1, p2;
+    String p1Name, p2Name;
 
-
+    Intent in;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +47,16 @@ public class GameActivity extends Activity implements TextView.OnClickListener {
         srufim = (ImageButton) findViewById(R.id.srufim);
         srufim.setOnClickListener(this);
         game = new GameManager(this);
+
+        in=getIntent();
+        if(in!=null&&in.getExtras()!=null){
+            Bundle xtras = in.getExtras();
+            p1Name= xtras.getString("P1");
+            p2Name= xtras.getString("P2");
+        }
+        p1 = new Player(p1Name,game.getPlayer(0).getSiege());
+        p2 = new Player(p2Name,game.getPlayer(1).getSiege());
+        game.setPlayers(new Player[]{p1,p2});
 
         rePlace = 0;
         num = 0;
@@ -161,24 +173,13 @@ public class GameActivity extends Activity implements TextView.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        /*for (int i = 0; i < cardsP1.length; i++)//עובר עם מבצר 1
-            if (cardsP1[i] == view) {
-                Toast.makeText(this, game.returnCard(i).toString(), Toast.LENGTH_SHORT).show();
-                ;
-            }
-        for (int j = 0; j < cardsP2.length; j++)//עובר על מבצר 2
-            if (cardsP2[j] == view) {
-                Toast.makeText(this, game.returnCard(j).toString(), Toast.LENGTH_SHORT).show();
-            }*/
-
-
         ImageButton btn = (ImageButton) view;
         final int RESDEF = R.drawable.back; //כתובת של קלף הפוך
 
         int res; //כתובת קלף הפוך
         boolean isTapDeck = game.getDeckCard() != null;
         int id = btn.getId();
-        boolean doTurn = true;
+        boolean doTurn = false;
         Card cardPress = new Card(0, "");
 
         if (R.id.deck == id) {
@@ -191,7 +192,6 @@ public class GameActivity extends Activity implements TextView.OnClickListener {
                 game.pickCard();
                 num = game.getDeckCard().getNum();
                 shape = game.getDeckCard().getShape();
-                doTurn=false;
 
                 res = cardFromDeck.getResources().getIdentifier("card" + shape + num, "drawable", getPackageName());
                 cardFromDeck.setBackgroundResource(res);
@@ -202,7 +202,7 @@ public class GameActivity extends Activity implements TextView.OnClickListener {
             if (isTapDeck) {
                 game.doBurn(game.getDeckCard());
                 game.setDeckCard(null);
-                game.nextTurn();
+                doTurn=true;;
 
             } else {
                 Toast.makeText(this, "Take card from deck", Toast.LENGTH_LONG).show();
@@ -213,27 +213,27 @@ public class GameActivity extends Activity implements TextView.OnClickListener {
                 if (game.getK() == 0) {
                     for (int i = 0; i < cardsP1.length; i++) {
                         if (cardsP1[i] == view) {
-                            if(game.makeATurn(i, 2))game.nextTurn();
+                            if(game.makeATurn(i, 2))doTurn=true;;
                         }
                     }
 
                     for (int j = 0; j < cardsP2.length; j++) {
                         if (cardsP2[j] == view) {
-                            if(game.makeATurn(j, 3))game.nextTurn();
+                            if(game.makeATurn(j, 3))doTurn=true;;
                         }
                     }
                 }
                 else {
                     for (int i = 0; i < cardsP2.length; i++) {
                         if (cardsP2[i] == view) {
-                            if(game.makeATurn(i, 2))game.nextTurn();
+                            if(game.makeATurn(i, 2))doTurn=true;;
                             ;
                         }
                     }
 
                     for (int j = 0; j < cardsP1.length; j++) {
                         if (cardsP1[j] == view) {
-                            if(game.makeATurn(j, 3))game.nextTurn();
+                            if(game.makeATurn(j, 3))doTurn=true;;
                             ;
                         }
                     }
@@ -244,6 +244,10 @@ public class GameActivity extends Activity implements TextView.OnClickListener {
         /*if(doTurn)
             Toast.makeText(this,game.getPlayerTurn().getName() + "'s Turn",Toast.LENGTH_SHORT).show();*/
         isWon();
+        if(doTurn){
+            game.nextTurn();
+            flipImageButton();
+        };
 
     }
 
@@ -258,11 +262,20 @@ public class GameActivity extends Activity implements TextView.OnClickListener {
                 startActivity(go);}
     }
 
-    private void flipImageButton(ImageButton imageButton) {
+    private void flipImageButton() {
+        int deg;
         if (isFlipped) {
-            imageButton.setRotation(0); // Reset rotation to 0 degrees
+            deg=0;
         } else {
-            imageButton.setRotation(180); // Rotate 180 degrees
+            deg=180;// Rotate 180 degrees
+        }
+        deck.setRotation(deg);
+        srufim.setRotation(deg);
+        for(int i=0;i<cardsP1.length;i++){
+            cardsP1[i].setRotation(deg);
+        }
+        for(int j=0;j<cardsP2.length;j++){
+            cardsP2[j].setRotation(deg);
         }
         isFlipped = !isFlipped; // Toggle the flipped state
     }
