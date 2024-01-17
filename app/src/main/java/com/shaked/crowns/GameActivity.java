@@ -21,9 +21,10 @@ public class GameActivity extends Activity implements TextView.OnClickListener {
     private ImageButton[] cardsP2; //מבצר של שחקן 2
     private ImageButton cardFromDeck; //קלף מהקופה
     private ImageButton deck; //הקופה
+    private boolean isFlipped = false;
     private ImageButton srufim; //חפיסת השרופים
 
-    GameManager game; // מנהל משחק
+    public static GameManager game; // מנהל משחק
 
     int rePlace; //שמירת מיקום קלף במבצר
 
@@ -31,18 +32,31 @@ public class GameActivity extends Activity implements TextView.OnClickListener {
     String shape;
 
     boolean isDone;
+    Player p1, p2;
+    String p1Name, p2Name;
 
-
+    Intent in;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         cardFromDeck = (ImageButton) findViewById(R.id.useCard);
+        cardFromDeck.setOnClickListener(this);
         deck = (ImageButton) findViewById(R.id.deck);
         deck.setOnClickListener(this);
         srufim = (ImageButton) findViewById(R.id.srufim);
         srufim.setOnClickListener(this);
         game = new GameManager(this);
+
+        in=getIntent();
+        if(in!=null&&in.getExtras()!=null){
+            Bundle xtras = in.getExtras();
+            p1Name= xtras.getString("P1");
+            p2Name= xtras.getString("P2");
+        }
+        p1 = new Player(p1Name,game.getPlayer(0).getSiege());
+        p2 = new Player(p2Name,game.getPlayer(1).getSiege());
+        game.setPlayers(new Player[]{p1,p2});
 
         rePlace = 0;
         num = 0;
@@ -68,26 +82,8 @@ public class GameActivity extends Activity implements TextView.OnClickListener {
         reloadTexture();
 
         Toast.makeText(this,game.getPlayerTurn().getName() + "'s Turn",Toast.LENGTH_SHORT).show();
-        //battery
     }
 
-    @Override
-    public void onClick(View v) {
-        ImageButton btn = (ImageButton) v;
-        for (int i = 0; i < cardsP1.length; i++)//עובר עם מבצר 1
-            if (cardsP1[i] == v) {
-               Toast.makeText(this,game.giveCard(i,1),Toast.LENGTH_SHORT).show();
-            }
-        for (int j = 0; j < cardsP2.length; j++)//עובר על מבצר 2
-            if (cardsP2[j] == v) {
-                Toast.makeText(this,game.giveCard(j,2),Toast.LENGTH_SHORT).show();
-            }
-    }
-
-    /**
-     * Reload texture.
-     */
-//פעולה שעושה רענון לכל הטקסטורות של הקלפים
     public void reloadTexture(){
         int cardNum = 0;
         String cardShape = "";
@@ -95,11 +91,13 @@ public class GameActivity extends Activity implements TextView.OnClickListener {
         int resCount;
         int res;
 
-        if(game.getDeckCard() != null){
-            cardFromDeck.setBackgroundResource(cardFromDeck.getResources().getIdentifier("card" + game.getDeckCard().getShape() +
-                    game.getDeckCard().getNum(), "drawable", getPackageName()));
+        if(game.getDeckCard()==null){
+            cardFromDeck.setBackgroundColor(Color.parseColor("#00FFFFFF"));
         }
-        else{cardFromDeck.setBackgroundColor(Color.parseColor("#00FFFFFF"));}
+        else{
+        cardFromDeck.setBackgroundResource(cardFromDeck.getResources().getIdentifier("card" + game.getDeckCard().getShape() +
+                game.getDeckCard().getNum(), "drawable", getPackageName()));}
+
         for(int i = 0; i < cardsP1.length; i++) { //מבצר 1
             if(i < 3){
                 cardNum = game.getPlayer(0).getSiege().getLine1().get(i).getCard().getNum();
@@ -169,6 +167,118 @@ public class GameActivity extends Activity implements TextView.OnClickListener {
                 cardsP2[7].setClickable(true);
                 cardsP2[8].setClickable(true);
             }
+
         }
     }//סוגר פעולה
+
+    @Override
+    public void onClick(View view) {
+        ImageButton btn = (ImageButton) view;
+        final int RESDEF = R.drawable.back; //כתובת של קלף הפוך
+
+        int res; //כתובת קלף הפוך
+        boolean isTapDeck = game.getDeckCard() != null;
+        int id = btn.getId();
+        boolean doTurn = false;
+        Card cardPress = new Card(0, "");
+
+        if (R.id.deck == id) {
+            if (!isTapDeck && game.getDeckGame().getSize() < 1){
+                Toast.makeText(this, "The Deck is Empty! - the system resting the Deck", Toast.LENGTH_SHORT).show();
+                game.resetDeckAfterAllBurn();
+                game.pickCard();
+            }
+            else if (!isTapDeck) {
+                game.pickCard();
+                num = game.getDeckCard().getNum();
+                shape = game.getDeckCard().getShape();
+
+                res = cardFromDeck.getResources().getIdentifier("card" + shape + num, "drawable", getPackageName());
+                cardFromDeck.setBackgroundResource(res);
+            } else {
+                Toast.makeText(this, "You have card", Toast.LENGTH_SHORT).show();
+            }
+        } else if (R.id.srufim == id) {
+            if (isTapDeck) {
+                game.doBurn(game.getDeckCard());
+                game.setDeckCard(null);
+                doTurn=true;;
+
+            } else {
+                Toast.makeText(this, "Take card from deck", Toast.LENGTH_LONG).show();
+            }
+        }
+        else {
+            if(isTapDeck) {
+                if (game.getK() == 0) {
+                    for (int i = 0; i < cardsP1.length; i++) {
+                        if (cardsP1[i] == view) {
+                            if(game.makeATurn(i, 2))doTurn=true;;
+                        }
+                    }
+
+                    for (int j = 0; j < cardsP2.length; j++) {
+                        if (cardsP2[j] == view) {
+                            if(game.makeATurn(j, 3))doTurn=true;;
+                        }
+                    }
+                }
+                else {
+                    for (int i = 0; i < cardsP2.length; i++) {
+                        if (cardsP2[i] == view) {
+                            if(game.makeATurn(i, 2))doTurn=true;;
+                            ;
+                        }
+                    }
+
+                    for (int j = 0; j < cardsP1.length; j++) {
+                        if (cardsP1[j] == view) {
+                            if(game.makeATurn(j, 3))doTurn=true;;
+                            ;
+                        }
+                    }
+                }
+            }
+        }
+        reloadTexture();
+        /*if(doTurn)
+            Toast.makeText(this,game.getPlayerTurn().getName() + "'s Turn",Toast.LENGTH_SHORT).show();*/
+        isWon();
+        if(doTurn){
+            game.nextTurn();
+            flipImageButton();
+        };
+
+    }
+
+    //פעולה שעוברת אקטיביטי עם יש ניצחון ומעבירה את שם המנצח
+    public void isWon(){
+        //בודק ניצחון
+        if(game.getPlayerNotTurn().getSiege().isEmpty()){
+            Toast.makeText(this,game.getPlayerTurn().getName()+" WON",Toast.LENGTH_LONG).show();
+            String playerWon =  game.getPlayerTurn().getName();
+            String playerLose =  game.getPlayerNotTurn().getName();
+                Intent go = new Intent(this,WinActivity.class);
+                go.putExtra("PLAYERWIN_NAME",playerWon);
+                go.putExtra("PLAYERLOSE_NAME",playerLose);
+                startActivity(go);}
+    }
+
+    private void flipImageButton() {
+        int deg;
+        if (isFlipped) {
+            deg=0;
+        } else {
+            deg=180;// Rotate 180 degrees
+        }
+        deck.setRotation(deg);
+        srufim.setRotation(deg);
+        for(int i=0;i<cardsP1.length;i++){
+            cardsP1[i].setRotation(deg);
+        }
+        for(int j=0;j<cardsP2.length;j++){
+            cardsP2[j].setRotation(deg);
+        }
+        isFlipped = !isFlipped; // Toggle the flipped state
+    }
 }

@@ -1,8 +1,10 @@
 package com.shaked.crowns;
 
 import android.app.Activity;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class GameManager {
 
@@ -105,56 +107,25 @@ public class GameManager {
         else this.kTurn = 0;
     }
 
+    public void pickCard(){
+        if(gameDeck.getSize()>0)
+            setDeckCard(gameDeck.removeCard());
+    }
+
     //get a card and put it in the burn deck
     public void doBurn(Card burnCard) {
         burnDeck.addCard(burnCard);
     }
 
+
     //use - reset the deck after all burn
     //move all the cards from the burn deck to the game deck
     public void resetDeckAfterAllBurn() {
-        gameDeck = burnDeck.cloneDeck();
-        burnDeck = new Deck();
+        for(int i=0;i<burnDeck.getSize();i++){
+            gameDeck.addCard(burnDeck.removeCard());
+        }
         gameDeck.shuffle();
     }
-
-    /*actions player can do*/
-
-    //atteck action
-    public Boolean doAtteck(Tower towerDiffend){
-        Card towerCard = towerDiffend.getCard();
-        
-        if((deckCard.equalsNum(1) && towerCard.equalsNum(13))
-                ||(deckCard.equalsNum(towerCard.getNum()+1))){
-                towerDiffend.removeCard();
-                doBurn(deckCard);
-                doBurn(towerCard);
-                if(towerDiffend.getSize() == 0){
-                    towerDiffend=new Tower(new Card(0,""));
-                }
-            return true;
-        }
-        return false;
-    }
-
-    //fortify action
-    public Boolean dofortify(Tower tower) {
-        Card towerCard = tower.getCard();
-        if (!tower.isFull()) {
-            if (tower.getCard().equalsNum(deckCard.getNum())) {
-                tower.addCard(deckCard);
-                deckCard = null;
-                return true;
-            } else if (tower.getCard().equalsNum(0) && deckCard.equalsNum(1)) {
-                tower.getCard().setNum(1);
-                tower.getCard().setShape(deckCard.getShape());
-                deckCard = null;
-                return true;
-            }
-        }
-        return false;
-    }
-
 
     /*turn action*/
 
@@ -162,42 +133,129 @@ public class GameManager {
     public boolean makeATurn(int i/*place of the card in the tower*/, int action/*which action is*/) {
         ArrayList<Tower> line;
         ArrayList<Tower> enemyLine;
+        Card attackCard;
 
-        if((!deckCard.equalsNum(0) || deckCard != null) && (gameDeck.getSize() != 0)) {
-            if(i < 3) {/*line 1*/
+        if (deckCard != null && gameDeck.getSize() != 0) {
+            if (i < 3) {/*line 1*/
                 line = getPlayerTurn().getSiege().getLine1();
                 enemyLine = getPlayerNotTurn().getSiege().getLine1();
                 switch (action) {
                     case 2://fortify
-                        dofortify(line.get(i));
-                    case 3://atteck
-                        doAtteck(enemyLine.get(i));
-                }//end of switch
+                            if (line.get(i).getCard().equalsNum(deckCard.getNum())) {
+                                if (!line.get(i).isFull()) {
+                                line.get(i).addCard(deckCard);
+                                deckCard = null;
+                                return true;}
+                            } else if (line.get(i).getCard().equalsNum(0) && deckCard.equalsNum(1)) {
+                                line.get(i).getCard().setNum(1);
+                                line.get(i).getCard().setShape(deckCard.getShape());
+                                deckCard = null;
+                                return true;
+                        }
+                    case 3:
+                        //if (deckCard.getNum() - enemyLine.get(i).getCard().getNum() == 1 || (deckCard.equalsNum(1) && deckCard.getNum() - enemyLine.get(i).getCard().getNum() == -12)) {
+                            doBurn(enemyLine.get(i).removeCard());
+                            doBurn(deckCard);
+                            deckCard = null;
+                            if (enemyLine.get(i).getSize() == 0) {
+                                enemyLine.get(i).addCard(new Card(0, ""));
+                            }
+                            return true;
+                        //}
+                }
             }/*end of line 1*/
 
-            if(i >= 3 && i < 7) {/*line 2*/
+            if (i >= 3 && i < 7) {/*line 2*/
                 line = getPlayerTurn().getSiege().getLine2();
                 enemyLine = getPlayerNotTurn().getSiege().getLine2();
                 switch (action) {
-                    case 2://fortify
-                        dofortify(line.get(i-3));
-                    case 3://atteck
-                        doAtteck(enemyLine.get(i-3));
-                }//end of switch
-            }/*end of line 2*/
-
-            if(i >= 7 && i < 9) {/*line 3*/
+                    case 2://לבצר
+                        if (!line.get(i - 3).isFull()) {
+                            if (line.get(i - 3).getCard().equalsNum(deckCard.getNum())) {
+                                line.get(i - 3).addCard(deckCard);
+                                deckCard = null;
+                                return true;
+                            } else if (line.get(i - 3).getCard().equalsNum(0) && deckCard.equalsNum(1)) {
+                                line.get(i - 3).getCard().setNum(1);
+                                line.get(i - 3).getCard().setShape(deckCard.getShape());
+                                deckCard = null;
+                                return true;
+                            }
+                        }
+                    case 3:
+                        //if (deckCard.getNum() - enemyLine.get(i-3).getCard().getNum() == 1 || (deckCard.equalsNum(1) && deckCard.getNum() - enemyLine.get(i-3).getCard().getNum() == -12)) {
+                            doBurn(enemyLine.get(i-3).removeCard());
+                            doBurn(deckCard);
+                            deckCard = null;
+                            if (enemyLine.get(i-3).getSize() == 0) {
+                                enemyLine.get(i-3).addCard(new Card(0, ""));
+                            }
+                            return true;
+                        //}
+                }
+            }
+            if (i >= 7 && i < 9) {/*line 3*/
                 line = getPlayerTurn().getSiege().getQk();
                 enemyLine = getPlayerNotTurn().getSiege().getQk();
                 switch (action) {
                     case 2://fortify
                         return false;
-                    case 3://atteck
-                        doAtteck(enemyLine.get(i-7));
+                    case 3:
+                        //if (deckCard.getNum() - enemyLine.get(i-7).getCard().getNum() == 1 || (deckCard.equalsNum(1) && deckCard.getNum() - enemyLine.get(i-7).getCard().getNum() == -12)) {
+                            doBurn(enemyLine.get(i-7).removeCard());
+                            doBurn(deckCard);
+                            deckCard = null;
+                            if (enemyLine.get(i-7).getSize() == 0) {
+                                enemyLine.get(i-7).addCard(new Card(0, ""));
+                            }
+                            return true;
+                        //}
                 }//end of switch
             }/*end of line 3*/
         }
-        return false;
+            return false;
+        }
+
+
+
+    public Card returnCard(int i,int player){
+        ArrayList<Tower> line;
+        Card card = new Card(0,"");
+        switch (player) {
+            case 0:
+                if (i < 3) {/*line 1*/
+                    line = players[0].getSiege().getLine1();
+                    card = line.get(i).getCard();
+                }/*end of line 1*/
+
+                if (i >= 3 && i < 7) {/*line 2*/
+                    line = players[0].getSiege().getLine2();
+                    card = line.get(i - 3).getCard();
+                }/*end of line 2*/
+
+                if (i >= 7 && i < 9) {/*line 3*/
+                    line = players[0].getSiege().getQk();
+                    card = line.get(i - 7).getCard();
+                }/*end of line 3*/
+                break;
+            case 1:
+                if (i < 3) {/*line 1*/
+                    line = players[1].getSiege().getLine1();
+                    card = line.get(i).getCard();
+                }/*end of line 1*/
+
+                if (i >= 3 && i < 7) {/*line 2*/
+                    line = players[1].getSiege().getLine2();
+                    card = line.get(i - 3).getCard();
+                }/*end of line 2*/
+
+                if (i >= 7 && i < 9) {/*line 3*/
+                    line = players[1].getSiege().getQk();
+                    card = line.get(i - 7).getCard();
+                }/*end of line 3*/
+                break;
+        }
+        return (card);
     }
 
     public String giveCard(int i, int sage){

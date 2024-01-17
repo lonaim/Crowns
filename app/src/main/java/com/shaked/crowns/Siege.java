@@ -37,7 +37,7 @@ public class Siege {
         Card c; //קלף מהחפיסה
         Tower[] temp = new Tower[7]; //חפיסה זמנית
         int place = 0;//מיקום הקלף הדומה
-        int count = 0;// כמה צריך לקחת מהקופה אחרי שלקחת 7 קלפים/סופר ביצורים התחלתיים
+        int count = 0;//מה ההמקום האחרון שהוכנס
 
         //אתחול מערך זמין
         for (int i = 0; i < temp.length; i++) {
@@ -50,32 +50,31 @@ public class Siege {
             if(exist(temp, c)) {//אם קיים קלף
                 place = foundPlace(temp, c);
                 if(temp[place].isFull()) {
-                    temp[i] = new Tower(c);
-                }
-                else {
-                    temp[place].addCard(c);
+                    temp[count] = new Tower(c);
                     count++;
                 }
-            }else {//אם לא קיים קלף
-                temp[i] = new Tower(c);
-            }
-        }
-        if(count > 3) count = 3; //אם מס הביצורים גדול משלוש אז הוא הופך לשלוש
-        for(int j = count; j > 0; j--) {
-            c = deck.removeCard();
-            if(exist(temp,c)) {//אם קיים קלף
-                if(temp[place].isFull()) {
-                    place = finalPlace(temp);
-                    temp[place] = new Tower(c);
-                }
                 else {
-                    place = foundPlace(temp, c);
                     temp[place].addCard(c);
                 }
+            }else {//אם לא קיים קלף
+                temp[count] = new Tower(c);
+                count++;
             }
-            else { //אם לא קיים קלף
-                place = finalPlace(temp);
-                temp[place] = new Tower(c);
+        }
+        while (count < 5) {
+            c= deck.removeCard();
+            if(exist(temp, c)) {//אם קיים קלף
+                place = foundPlace(temp, c);
+                if(temp[place].isFull()) {
+                    temp[count] = new Tower(c);
+                    count++;
+                }
+                else {
+                    temp[place].addCard(c);
+                }
+            }else {//אם לא קיים קלף
+                temp[count] = new Tower(c);
+                count++;
             }
         }
 
