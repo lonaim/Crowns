@@ -257,8 +257,10 @@ public class GameActivity extends Activity implements TextView.OnClickListener {
         if(game.getPlayerNotTurn().getSiege().isEmpty()){
             Toast.makeText(this,game.getPlayerTurn().getName()+" WON",Toast.LENGTH_LONG).show();
             String playerWon =  game.getPlayerTurn().getName();
+            String playerLose =  game.getPlayerNotTurn().getName();
                 Intent go = new Intent(this,WinActivity.class);
-                go.putExtra("PLAYER_NAME",playerWon);
+                go.putExtra("PLAYERWIN_NAME",playerWon);
+                go.putExtra("PLAYERLOSE_NAME",playerLose);
                 startActivity(go);}
     }
 

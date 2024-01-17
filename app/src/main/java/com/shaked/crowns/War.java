@@ -6,11 +6,18 @@ public class War {
     private int p1Scor;
     private int p2Scor;
 
-    public War(String p1Name, String p2Name, int p1Scor, int p2Scor) {
+    public War(String p1Name, String p2Name,int p1Scor, int p2Scor) {
         this.p1Name = p1Name;
         this.p2Name = p2Name;
         this.p1Scor = p1Scor;
         this.p2Scor = p2Scor;
+    }
+
+    public War(String p1Name, String p2Name) {
+        this.p1Name = p1Name;
+        this.p2Name = p2Name;
+        this.p1Scor = 0;
+        this.p2Scor = 0;
     }
 
     public String getP1Name() {
@@ -46,7 +53,7 @@ public class War {
     }
 
     public boolean isSameWar(War war) {
-        return p1Scor == war.p1Scor && p2Scor == war.p2Scor && p1Name.equals(war.p1Name) && p2Name.equals(war.p2Name);
+        return p1Name.equals(war.p1Name) && p2Name.equals(war.p2Name);
     }
 
     @Override

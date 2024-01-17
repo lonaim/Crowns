@@ -53,12 +53,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return res;
     }
 
-    public Cursor getDataNamed(War war){
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COL_P1ID + " = ? AND " + COL_P2ID + " = ?", new String[]{war.getP1Name(), war.getP2Name()});
-        return res;
-    }
-
     public boolean updateData(War war){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -74,14 +68,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.update(TABLE_NAME, contentValues, whereClause, whereArgs);
         return true;
     }
-    public Integer deleteData (String id){
+    public Integer deleteData (War war){
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_NAME, "ID = ?", new String[] {id});
+        return db.delete(TABLE_NAME, COL_P1ID + " = ? AND " + COL_P2ID + " = ?",  new String[]{war.getP1Name(), war.getP2Name()});
     }
 
-    public boolean dataExists(String p1Name, String p2Name) {
+    public boolean dataExists(String player1,String player2) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COL_P1ID + " = ? AND " + COL_P2ID + " = ?", new String[]{p1Name, p2Name});
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COL_P1ID + " = ? AND " + COL_P2ID + " = ?", new String[]{player1, player2});
         boolean exists = (cursor.getCount() > 0);
         cursor.close();
         return exists;
