@@ -4,20 +4,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="100dp"
-    android:layout_marginLeft="10dp"
     tools:context=".StatActivity">
 
-    <TableRow
-        android:background="@color/white"
-        android:padding="5dp"
-        android:gravity="center">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <TextView android:layout_width="wrap_content"
+        <TableLayout
+            android:id="@+id/tableLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            android:text="Wars Details"/>
-    </TableRow>
+            android:stretchColumns="*"
+            android:padding="16dp">
+
+            <!-- Table headers -->
+            <TableRow
+                android:id="@+id/headTab">
+
+                <TextView
+                    android:id="@+id/headTabPlayers"
+                    android:text="Players Names"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/headTabScore"
+                    android:text="Score"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:layout_weight="1"/>
+            </TableRow>
+
+        </TableLayout>
+    </ScrollView>
 
 </TableLayout>
