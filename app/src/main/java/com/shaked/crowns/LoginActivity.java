@@ -14,12 +14,12 @@ public class LoginActivity extends AppCompatActivity {
     Button btnWar,btnBack;
     EditText etP1Name, etP2Name;
 
-    boolean warExists;
+    boolean clickTwice;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        warExists = false;
+        clickTwice = false;
         myDb = new DatabaseHelper(this);
 
         etP1Name = findViewById(R.id.etP1Name);
@@ -51,9 +51,9 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     }
                     else{
-                        if(!warExists){
+                        if(!clickTwice){
                         Toast.makeText(LoginActivity.this, "War like this Exists, if its you click again", Toast.LENGTH_SHORT).show();
-                        warExists = true;}
+                        clickTwice = true;}
                         else {
                             intent.putExtra("P1", etP1Name.getText().toString());
                             intent.putExtra("P2", etP2Name.getText().toString());

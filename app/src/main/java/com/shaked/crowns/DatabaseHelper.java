@@ -68,9 +68,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.update(TABLE_NAME, contentValues, whereClause, whereArgs);
         return true;
     }
-    public Integer deleteData (War war){
+    public Integer deleteData (){
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_NAME, COL_P1ID + " = ? AND " + COL_P2ID + " = ?",  new String[]{war.getP1Name(), war.getP2Name()});
+        return db.delete(TABLE_NAME, null, null);
     }
 
     public boolean dataExists(String player1,String player2) {
