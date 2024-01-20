@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GameActivity"
-    android:background="@drawable/bggame">
+    android:background="@drawable/bggame"
+    tools:context=".GameActivity">
 
     <!--Layout for deck and srufim-->
 
@@ -13,7 +13,25 @@
 
     <!--Siege for Player 1-->
 
+    <TextView
+        android:id="@+id/timerTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="3:00"
+        android:textSize="50sp"
+        android:background="#99FFFFFF"
+        android:gravity="center"
+        android:fontFamily="@font/gepestev"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5" />
+
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
@@ -36,7 +54,7 @@
             android:layout_width="50dp"
             android:layout_height="70dp"
             android:layout_margin="75dp"
-            android:background="#00FFFFFF"/>
+            android:background="#00FFFFFF" />
 
 
         <ImageButton
@@ -49,16 +67,17 @@
 
     <LinearLayout
         android:id="@+id/siege_p2"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="20dp"
         android:gravity="top|center_vertical|center_horizontal|center"
         android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp">
+        tools:ignore="MissingConstraints">
 
         <!--Line King and Queen for player 2-->
         <LinearLayout
@@ -156,7 +175,7 @@
 
     <LinearLayout
         android:id="@+id/siege_p1"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
@@ -164,8 +183,9 @@
         android:gravity="top|center_vertical|center_horizontal|center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="56dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints">
 
         <!--Line1_for player 1-->
         <LinearLayout

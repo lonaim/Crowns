@@ -1,13 +1,18 @@
 package com.shaked.crowns;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.MenuBuilder;
 
+import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -52,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         music.setClass(this, MusicService.class);
         startService(music);
 
-        Button button = findViewById(R.id.button);
+        Button button = findViewById(R.id.btnGame);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button button2 = findViewById(R.id.button2);
+        Button button2 = findViewById(R.id.btnStat);
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button button3 = findViewById(R.id.button3);
+        Button button3 = findViewById(R.id.btnSettings);
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,5 +83,46 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @SuppressLint("RestrictedApi")
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+
+        if (menu instanceof MenuBuilder) {
+            MenuBuilder mb = (MenuBuilder) menu;
+            mb.setOptionalIconsVisible(true);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.btnMute) {
+            if (MainActivity.isPlaying) {
+                MainActivity.mServ.pauseMusic();
+                item.setTitle("Unmute");
+                item.setIcon(R.drawable.mute);
+            } else {
+                MainActivity.mServ.resumeMusic();
+                item.setTitle("Mute");
+                item.setIcon(R.drawable.unmute);
+            }
+            MainActivity.isPlaying = !MainActivity.isPlaying;
+        }
+        if (id == R.id.Home) {
+            Intent go = new Intent(this, MainActivity.class);
+            startActivity(go);
+        }
+
+        if (id == R.id.About) {
+            Intent go = new Intent(this, AboutMeActivity.class);
+            startActivity(go);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

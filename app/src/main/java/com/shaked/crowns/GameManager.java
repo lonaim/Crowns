@@ -153,7 +153,7 @@ public class GameManager {
                                 return true;
                         }
                     case 3:
-                        //if (deckCard.getNum() - enemyLine.get(i).getCard().getNum() == 1 || (deckCard.equalsNum(1) && deckCard.getNum() - enemyLine.get(i).getCard().getNum() == -12)) {
+                        if (deckCard.getNum() - enemyLine.get(i).getCard().getNum() == 1 || (deckCard.equalsNum(1) && deckCard.getNum() - enemyLine.get(i).getCard().getNum() == -12)) {
                             doBurn(enemyLine.get(i).removeCard());
                             doBurn(deckCard);
                             deckCard = null;
@@ -161,7 +161,7 @@ public class GameManager {
                                 enemyLine.get(i).addCard(new Card(0, ""));
                             }
                             return true;
-                        //}
+                        }
                 }
             }/*end of line 1*/
 
@@ -183,7 +183,7 @@ public class GameManager {
                             }
                         }
                     case 3:
-                        //if (deckCard.getNum() - enemyLine.get(i-3).getCard().getNum() == 1 || (deckCard.equalsNum(1) && deckCard.getNum() - enemyLine.get(i-3).getCard().getNum() == -12)) {
+                        if (deckCard.getNum() - enemyLine.get(i-3).getCard().getNum() == 1 || (deckCard.equalsNum(1) && deckCard.getNum() - enemyLine.get(i-3).getCard().getNum() == -12)) {
                             doBurn(enemyLine.get(i-3).removeCard());
                             doBurn(deckCard);
                             deckCard = null;
@@ -191,7 +191,7 @@ public class GameManager {
                                 enemyLine.get(i-3).addCard(new Card(0, ""));
                             }
                             return true;
-                        //}
+                        }
                 }
             }
             if (i >= 7 && i < 9) {/*line 3*/
@@ -201,7 +201,7 @@ public class GameManager {
                     case 2://fortify
                         return false;
                     case 3:
-                        //if (deckCard.getNum() - enemyLine.get(i-7).getCard().getNum() == 1 || (deckCard.equalsNum(1) && deckCard.getNum() - enemyLine.get(i-7).getCard().getNum() == -12)) {
+                        if (deckCard.getNum() - enemyLine.get(i-7).getCard().getNum() == 1 || (deckCard.equalsNum(1) && deckCard.getNum() - enemyLine.get(i-7).getCard().getNum() == -12)) {
                             doBurn(enemyLine.get(i-7).removeCard());
                             doBurn(deckCard);
                             deckCard = null;
@@ -209,7 +209,7 @@ public class GameManager {
                                 enemyLine.get(i-7).addCard(new Card(0, ""));
                             }
                             return true;
-                        //}
+                        }
                 }//end of switch
             }/*end of line 3*/
         }

@@ -17,8 +17,9 @@ public class WinActivity extends AppCompatActivity implements TextView.OnClickLi
 
     private String playerWinName = "";
     private String playerLoseName = "";
+    private boolean timerEnd;
     private War war;
-    private TextView tvPlayerName;
+    private TextView tvPlayerName,tvWon;
     private Button btnAgain,btnBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,16 +29,21 @@ public class WinActivity extends AppCompatActivity implements TextView.OnClickLi
         myDb = new DatabaseHelper(this);
 
         tvPlayerName = findViewById(R.id.tvPlayerName);
+        tvWon = findViewById(R.id.tvWon);
         btnAgain = findViewById(R.id.btnAgain);
         btnAgain.setOnClickListener(this);
         btnBack = findViewById(R.id.btnBack);
         btnBack.setOnClickListener(this);
 
         in=getIntent();
+        Bundle xtras = in.getExtras();
+        timerEnd = xtras.getBoolean("TIMER_END");
+
+        if(!timerEnd){
         if(in!=null&&in.getExtras()!=null){
-            Bundle xtras = in.getExtras();
-            playerWinName= xtras.getString("PLAYERWIN_NAME");
-            playerLoseName= xtras.getString("PLAYERLOSE_NAME");
+            Bundle morerXtras = in.getExtras();
+            playerWinName= morerXtras.getString("PLAYERWIN_NAME");
+            playerLoseName= morerXtras.getString("PLAYERLOSE_NAME");
         }
 
         tvPlayerName.setText(playerWinName);
@@ -60,6 +66,11 @@ public class WinActivity extends AppCompatActivity implements TextView.OnClickLi
         }
 
         myDb.updateData(war);
+    }
+        else{
+            tvPlayerName.setText("Tie");
+            tvWon.setText("no one won");
+        }
     }
 
     @Override
