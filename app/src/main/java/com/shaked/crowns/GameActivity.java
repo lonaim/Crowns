@@ -1,8 +1,13 @@
 package com.shaked.crowns;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.MenuBuilder;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -10,12 +15,14 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.service.autofill.OnClickAction;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class GameActivity extends Activity implements TextView.OnClickListener {
+public class GameActivity extends AppCompatActivity implements TextView.OnClickListener {
 
     /*תכונות*/
     private CountDownTimer countDownTimer;
@@ -297,7 +304,7 @@ public class GameActivity extends Activity implements TextView.OnClickListener {
 
 
     private void startCountdown() {
-        countDownTimer = new CountDownTimer(3 * 60 * 1000, 1000) {
+        countDownTimer = new CountDownTimer(20 * 60 * 1000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 long minutes = millisUntilFinished / 1000 / 60;
@@ -314,5 +321,59 @@ public class GameActivity extends Activity implements TextView.OnClickListener {
                 startActivity(go);
             }
         };
+        countDownTimer.start();
+    }
+
+    @SuppressLint("RestrictedApi")
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+
+        if (menu instanceof MenuBuilder) {
+            MenuBuilder mb = (MenuBuilder) menu;
+            mb.setOptionalIconsVisible(true);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.btnMute) {
+            if (MainActivity.isPlaying) {
+                MainActivity.mServ.pauseMusic();
+                item.setTitle("Unmute");
+                item.setIcon(R.drawable.mute);
+            } else {
+                MainActivity.mServ.resumeMusic();
+                item.setTitle("Mute");
+                item.setIcon(R.drawable.unmute);
+            }
+            MainActivity.isPlaying = !MainActivity.isPlaying;
+        }
+        if (id == R.id.ExitApp) {
+            new AlertDialog.Builder(this).setTitle("Exit").
+                    setMessage("Are you sure you want go home?").
+                    setNeutralButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    }).setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    })/*.setIcon(R.drawable.btnback)*/.show();
+        }
+
+        if (id == R.id.About) {
+            Intent go = new Intent(this, AboutMeActivity.class);
+            startActivity(go);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

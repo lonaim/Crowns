@@ -7,12 +7,12 @@
         app:showAsAction="always"/>
 
     <item
-        android:id="@+id/Home"
-        android:title="Home"
-        android:icon="@drawable/home"/>
-
-    <item
         android:id="@+id/About"
         android:title="About"
         android:icon="@drawable/person"/>
+
+    <item
+        android:id="@+id/ExitApp"
+        android:title="ExitApp"
+        android:icon="@drawable/home"/>
 </menu>

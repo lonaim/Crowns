@@ -80,7 +80,7 @@ public class AboutMeActivity extends AppCompatActivity {
             }
             MainActivity.isPlaying = !MainActivity.isPlaying;
         }
-        if (id == R.id.Home) {
+        if (id == R.id.ExitApp) {
             Intent go = new Intent(this, MainActivity.class);
             startActivity(go);
         }

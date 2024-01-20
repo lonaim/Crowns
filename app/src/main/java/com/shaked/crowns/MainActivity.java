@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.MenuBuilder;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
@@ -113,9 +115,21 @@ public class MainActivity extends AppCompatActivity {
             }
             MainActivity.isPlaying = !MainActivity.isPlaying;
         }
-        if (id == R.id.Home) {
-            Intent go = new Intent(this, MainActivity.class);
-            startActivity(go);
+        if (id == R.id.ExitApp) {
+            new AlertDialog.Builder(this).setTitle("Exit").
+                    setMessage("Are you sure you want go home?").
+                    setNeutralButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    }).setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    })/*.setIcon(R.drawable.btnback)*/.show();
         }
 
         if (id == R.id.About) {

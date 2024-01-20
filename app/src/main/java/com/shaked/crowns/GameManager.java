@@ -153,14 +153,16 @@ public class GameManager {
                                 return true;
                         }
                     case 3:
-                        if (deckCard.getNum() - enemyLine.get(i).getCard().getNum() == 1 || (deckCard.equalsNum(1) && deckCard.getNum() - enemyLine.get(i).getCard().getNum() == -12)) {
-                            doBurn(enemyLine.get(i).removeCard());
-                            doBurn(deckCard);
-                            deckCard = null;
-                            if (enemyLine.get(i).getSize() == 0) {
-                                enemyLine.get(i).addCard(new Card(0, ""));
+                        if(!enemyLine.get(i).getCard().equalsNum(0)){
+                            if (deckCard.getNum() - enemyLine.get(i).getCard().getNum() == 1 || (deckCard.equalsNum(1) && deckCard.getNum() - enemyLine.get(i).getCard().getNum() == -12)) {
+                                doBurn(enemyLine.get(i).removeCard());
+                                doBurn(deckCard);
+                                deckCard = null;
+                                if (enemyLine.get(i).getSize() == 0) {
+                                    enemyLine.get(i).addCard(new Card(0, ""));
+                                }
+                                return true;
                             }
-                            return true;
                         }
                 }
             }/*end of line 1*/
