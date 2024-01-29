@@ -62,7 +62,7 @@ public class MusicService extends Service  implements OnErrorListener {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         mPlayer.start();
-        return START_STICKY;
+        return START_NOT_STICKY;
     }
 
     public void pauseMusic() {
@@ -96,21 +96,21 @@ public class MusicService extends Service  implements OnErrorListener {
         }
 
     public void stopMusic() {
-        mPlayer.stop();
-        mPlayer.release();
-        mPlayer = null;
+        if (mPlayer != null) {
+            mPlayer.stop();
+            mPlayer.release();
+            mPlayer = null;
+        }
+        stopSelf();  // Stop the service
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         if (mPlayer != null) {
-            try {
-                mPlayer.stop();
-                mPlayer.release();
-            } finally {
-                mPlayer = null;
-            }
+            mPlayer.stop();
+            mPlayer.release();
+            mPlayer = null;
         }
     }
 

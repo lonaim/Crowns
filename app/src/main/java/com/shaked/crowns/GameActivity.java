@@ -18,6 +18,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -311,6 +313,11 @@ public class GameActivity extends AppCompatActivity implements TextView.OnClickL
                 long seconds = (millisUntilFinished / 1000) % 60;
 
                 time.setText(String.format("%02d:%02d", minutes, seconds));
+
+                if(minutes<1){
+                    Animation shakeAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake_animation);
+                    time.startAnimation(shakeAnimation);
+                }
             }
 
             @Override

@@ -13,22 +13,25 @@
 
     <!--Siege for Player 1-->
 
-    <TextView
-        android:id="@+id/timerTextView"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="20:00"
-        android:textSize="50sp"
-        android:background="#99FFFFFF"
-        android:gravity="center"
-        android:fontFamily="@font/gepestev"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="#99FFFFFF">
+
+        <TextView
+            android:id="@+id/timerTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/gepestev"
+            android:gravity="center"
+            android:text="20:00"
+            android:textSize="50sp" />
+    </FrameLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout2"

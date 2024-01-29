@@ -12,13 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Crowns"
         tools:targetApi="31">
+
         <activity
             android:name=".SettingsActivity"
             android:exported="false" />
         <activity
             android:name=".StatActivity"
             android:exported="false" />
-
         <activity
             android:name=".AboutMeActivity"
             android:exported="false" />
@@ -27,8 +27,7 @@
             android:name=".MusicService"
             android:enabled="true"
             android:exported="true"
-            android:stopWithTask="true"
-            />
+            android:stopWithTask="true" />
 
         <activity
             android:name=".LoginActivity"
