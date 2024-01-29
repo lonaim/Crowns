@@ -139,4 +139,20 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mServ.pauseMusic();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(mServ != null && mIsBound) {
+            mServ.resumeMusic();
+        }
+    }
+
 }

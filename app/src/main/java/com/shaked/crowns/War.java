@@ -60,4 +60,6 @@ public class War {
     public String toString() {
         return "War{" + p1Name + " - " + p1Scor+ '\'' + p2Name + " - " + p2Scor + '\'' + '}';
     }
+
+
 }

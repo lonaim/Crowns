@@ -1,6 +1,8 @@
 package com.shaked.crowns;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -52,6 +54,7 @@ public class AboutMeActivity extends AppCompatActivity {
         tvWelcome.setText(all);
     }
 
+
     @SuppressLint("RestrictedApi")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -81,8 +84,21 @@ public class AboutMeActivity extends AppCompatActivity {
             MainActivity.isPlaying = !MainActivity.isPlaying;
         }
         if (id == R.id.ExitApp) {
-            Intent go = new Intent(this, MainActivity.class);
-            startActivity(go);
+            new AlertDialog.Builder(this).setTitle("Exit").
+                    setMessage("Are you sure you want go home?").
+                    setNeutralButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    }).setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent go = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(go);
+                        }
+                    })/*.setIcon(R.drawable.btnback)*/.show();
         }
 
         if (id == R.id.About) {
@@ -91,5 +107,20 @@ public class AboutMeActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MainActivity.mServ.pauseMusic();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(MainActivity.mServ != null) {
+            MainActivity.mServ.resumeMusic();
+        }
     }
 }

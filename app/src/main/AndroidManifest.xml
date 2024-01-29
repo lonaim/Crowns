@@ -26,7 +26,9 @@
         <service
             android:name=".MusicService"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="true"
+            android:stopWithTask="true"
+            />
 
         <activity
             android:name=".LoginActivity"

@@ -364,7 +364,8 @@ public class GameActivity extends AppCompatActivity implements TextView.OnClickL
 
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            finish();
+                            Intent go = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(go);
                         }
                     })/*.setIcon(R.drawable.btnback)*/.show();
         }
@@ -375,5 +376,20 @@ public class GameActivity extends AppCompatActivity implements TextView.OnClickL
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MainActivity.mServ.pauseMusic();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(MainActivity.mServ != null) {
+            MainActivity.mServ.resumeMusic();
+        }
     }
 }
