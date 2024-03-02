@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -120,20 +121,7 @@ public class MainActivity extends AppCompatActivity {
             MainActivity.isPlaying = !MainActivity.isPlaying;
         }
         if (id == R.id.ExitApp) {
-            new AlertDialog.Builder(this).setTitle("Exit").
-                    setMessage("Are you sure you want go home?").
-                    setNeutralButton("No", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                        }
-                    }).setNegativeButton("Yes", new DialogInterface.OnClickListener() {
-
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            finish();
-                        }
-                    })/*.setIcon(R.drawable.btnback)*/.show();
+            Toast.makeText(this, "you are at home", Toast.LENGTH_SHORT).show();
         }
 
         if (id == R.id.About) {

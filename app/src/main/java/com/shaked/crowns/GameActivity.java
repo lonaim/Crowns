@@ -7,6 +7,7 @@ import androidx.appcompat.view.menu.MenuBuilder;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -24,6 +25,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 
 public class GameActivity extends AppCompatActivity implements TextView.OnClickListener {
 
@@ -49,11 +52,14 @@ public class GameActivity extends AppCompatActivity implements TextView.OnClickL
     String p1Name, p2Name;
 
     Intent in;
+    private static final long VIBRATION_DURATION = 3000; // 3 seconds
+    private Vibrator vibrator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         time = findViewById(R.id.timerTextView);
         startCountdown();
@@ -312,6 +318,13 @@ public class GameActivity extends AppCompatActivity implements TextView.OnClickL
         isFlipped = !isFlipped; // Toggle the flipped state
     }
 
+    private void vibrateDevice() {
+        // Check if the device supports vibration
+        if (vibrator.hasVibrator()) {
+            vibrator.vibrate(VibrationEffect.createOneShot(VIBRATION_DURATION, VibrationEffect.DEFAULT_AMPLITUDE));
+        }
+    }
+
 
     private void startCountdown() {
         countDownTimer = new CountDownTimer(20 * 60 * 1000, 1000) {
@@ -325,6 +338,7 @@ public class GameActivity extends AppCompatActivity implements TextView.OnClickL
                 if(minutes<1){
                     Animation shakeAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake_animation);
                     time.startAnimation(shakeAnimation);
+                    vibrateDevice();
                 }
             }
 
