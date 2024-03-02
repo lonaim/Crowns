@@ -83,6 +83,16 @@
         tools:ignore="MissingConstraints">
 
         <!--Line King and Queen for player 2-->
+        <TextView
+            android:id="@+id/tvName1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:paddingLeft="10dp"
+            android:textSize="20sp"
+            android:text="Player1"
+            android:fontFamily="@font/gepestev"/>
+
         <LinearLayout
             android:id="@+id/lineQK_p2"
             android:layout_width="wrap_content"
@@ -282,6 +292,17 @@
                 android:layout_weight="1"
                 android:background="@drawable/back" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvName2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:paddingRight="10dp"
+            android:textSize="20sp"
+            android:text="Player2"
+            android:gravity="right"
+            android:fontFamily="@font/gepestev"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -28,7 +29,7 @@ public class GameActivity extends AppCompatActivity implements TextView.OnClickL
 
     /*תכונות*/
     private CountDownTimer countDownTimer;
-    private TextView time;
+    private TextView time,tvName1,tvName2;
     private ImageButton[] cardsP1; //מבצר של שחקן 1
     private ImageButton[] cardsP2; //מבצר של שחקן 2
     private ImageButton cardFromDeck; //קלף מהקופה
@@ -64,6 +65,10 @@ public class GameActivity extends AppCompatActivity implements TextView.OnClickL
         srufim = (ImageButton) findViewById(R.id.srufim);
         srufim.setOnClickListener(this);
         game = new GameManager(this);
+        tvName1 = findViewById(R.id.tvName1);
+        tvName2 = findViewById(R.id.tvName2);
+
+
 
         in = getIntent();
         if (in != null && in.getExtras() != null) {
@@ -73,6 +78,8 @@ public class GameActivity extends AppCompatActivity implements TextView.OnClickL
         }
         p1 = new Player(p1Name, game.getPlayer(0).getSiege());
         p2 = new Player(p2Name, game.getPlayer(1).getSiege());
+        tvName1.setText(p1Name);
+        tvName2.setText(p2Name);
         game.setPlayers(new Player[]{p1, p2});
 
         rePlace = 0;
@@ -98,7 +105,8 @@ public class GameActivity extends AppCompatActivity implements TextView.OnClickL
         /*reload the texture*/
         reloadTexture();
 
-        Toast.makeText(this, game.getPlayerTurn().getName() + "'s Turn", Toast.LENGTH_SHORT).show();
+        registerReceiver(new BatteryReceiver(), new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+
     }
 
     public void reloadTexture() {
