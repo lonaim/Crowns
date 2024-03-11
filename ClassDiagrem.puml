@@ -1,0 +1,331 @@
+@startuml
+class com.shaked.crowns.MainActivity {
+- boolean mIsBound
++ {static} boolean isPlaying
++ {static} MusicService mServ
+- ServiceConnection Scon
+~ void doBindService()
+~ void doUnbindService()
+# void onCreate(Bundle)
++ boolean onCreateOptionsMenu(Menu)
++ boolean onOptionsItemSelected(MenuItem)
+# void onPause()
+# void onResume()
+}
+
+
+class com.shaked.crowns.Player {
+- String name
+- Siege siege
++ <<Create>> Player(String,Siege)
++ String getName()
++ void setName(String)
++ Siege getSiege()
++ void setSiege(Siege)
++ boolean isFinalRound()
++ String toString()
+}
+
+
+class com.shaked.crowns.Siege {
+- ArrayList<Tower> qk
+- ArrayList<Tower> line1
+- ArrayList<Tower> line2
++ <<Create>> Siege(Card,Card,Deck)
++ ArrayList<Tower> getQk()
++ ArrayList<Tower> getLine1()
++ ArrayList<Tower> getLine2()
+- void fillSiege(Deck)
+- int finalPlace(Tower[])
+- boolean exist(Tower[],Card)
+- int foundPlace(Tower[],Card)
++ boolean isLine1Empty()
++ boolean isLine2Empty()
++ boolean isLineQKEmpty()
++ boolean isEmpty()
++ String toString()
+}
+
+
+class com.shaked.crowns.GameActivity {
+- CountDownTimer countDownTimer
+- TextView time
+- ImageButton[] cardsP1
+- ImageButton[] cardsP2
+- ImageButton cardFromDeck
+- ImageButton deck
+- boolean isFlipped
+- ImageButton srufim
++ {static} GameManager game
+~ int rePlace
+~ int num
+~ String shape
+~ Player p1
+~ String p1Name
+~ Intent in
+- {static} long VIBRATION_DURATION
+- Vibrator vibrator
+# void onCreate(Bundle)
++ void reloadTexture()
++ void onClick(View)
++ void isWon()
+- void flipImageButton()
+- void vibrateDevice()
+- void startCountdown()
++ boolean onCreateOptionsMenu(Menu)
++ boolean onOptionsItemSelected(MenuItem)
+# void onPause()
+# void onResume()
+}
+
+
+class com.shaked.crowns.LoginActivity {
+- DatabaseHelper myDb
+~ Button btnWar
+~ EditText etP1Name
+~ boolean clickTwice
+# void onCreate(Bundle)
++ boolean onCreateOptionsMenu(Menu)
++ boolean onOptionsItemSelected(MenuItem)
+# void onPause()
+# void onResume()
+}
+
+
+class com.shaked.crowns.WinActivity {
+- Intent in
+- DatabaseHelper myDb
+- String playerWinName
+- String playerLoseName
+- boolean timerEnd
+- War war
+- TextView tvPlayerName
+- Button btnAgain
+# void onCreate(Bundle)
++ void onClick(View)
+}
+
+
+class com.shaked.crowns.DatabaseHelper {
++ {static} String DB_NAME
++ {static} int DB_VERSION
++ {static} String TABLE_NAME
++ {static} String COL_P1ID
++ {static} String COL_P1SCORE
++ {static} String COL_P2ID
++ {static} String COL_P2SCORE
++ <<Create>> DatabaseHelper(Context)
++ void onCreate(SQLiteDatabase)
++ void onUpgrade(SQLiteDatabase,int,int)
++ boolean insertData(War)
++ Cursor getAllData()
++ boolean updateData(War)
++ Integer deleteData()
++ boolean dataExists(String,String)
++ Cursor getDataCursor(String,String)
+}
+
+
+class com.shaked.crowns.AboutMeActivity {
+~ TextView tvWelcome
+~ InputStream is
+~ InputStreamReader isr
+~ BufferedReader br
+~ Button btBack
+~ Intent intent
+# void onCreate(Bundle)
+- void buildText()
++ boolean onCreateOptionsMenu(Menu)
++ boolean onOptionsItemSelected(MenuItem)
+# void onPause()
+# void onResume()
+}
+
+
+class com.shaked.crowns.GameManager {
+- Player[] players
+~ int kTurn
+- Deck gameDeck
+- Deck burnDeck
+- Card deckCard
+- Activity activity
++ <<Create>> GameManager(Activity)
++ void resetGame()
++ String deckCardToString()
++ Player[] getPlayers()
++ void setPlayers(Player[])
++ int getK()
++ void setK(int)
++ void setDeckCard(Card)
++ Card getDeckCard()
++ Player getPlayerTurn()
++ Player getPlayerNotTurn()
++ Player getPlayer(int)
++ Deck getDeckGame()
++ void setPlayersName(String,String)
++ void nextTurn()
++ void pickCard()
++ void doBurn(Card)
++ void resetDeckAfterAllBurn()
++ boolean makeATurn(int,int)
++ Card returnCard(int,int)
++ String giveCard(int,int)
+}
+
+
+class com.shaked.crowns.Deck {
+- Stack<Card> deck
++ <<Create>> Deck()
++ int getSize()
++ void fill()
++ void addCard(Card)
++ Card removeCard()
++ void shuffle()
++ String toString()
+}
+
+
+class com.shaked.crowns.StatActivity {
+~ DatabaseHelper myDb
+~ TextView tableRowPlayer
+~ Button btnDel
+# void onCreate(Bundle)
++ void relodTab()
++ boolean onCreateOptionsMenu(Menu)
++ boolean onOptionsItemSelected(MenuItem)
+# void onResume()
+}
+
+
+class com.shaked.crowns.Tower {
+- Stack<Card> cards
++ <<Create>> Tower(Card)
++ Stack<Card> getCards()
++ void setCards(Stack<Card>)
++ Card getCard()
++ int getSize()
++ void addCard(Card)
++ Card removeCard()
++ boolean isFull()
++ String toString()
+}
+
+
+class com.shaked.crowns.War {
+- String p1Name
+- String p2Name
+- int p1Scor
+- int p2Scor
++ <<Create>> War(String,String,int,int)
++ <<Create>> War(String,String)
++ String getP1Name()
++ void setP1Name(String)
++ String getP2Name()
++ void setP2Name(String)
++ int getP1Scor()
++ void setP1Scor(int)
++ int getP2Scor()
++ void setP2Scor(int)
++ boolean isSameWar(War)
++ String toString()
+}
+
+
+class com.shaked.crowns.MusicService {
+- IBinder mBinder
+~ MediaPlayer mPlayer
+- int length
+- {static} String DEFAULT_SONG
+- String currentSong
++ <<Create>> MusicService()
++ IBinder onBind(Intent)
++ void onCreate()
++ int onStartCommand(Intent,int,int)
++ void pauseMusic()
++ void resumeMusic()
++ void playMusic()
++ void stopMusic()
++ void onDestroy()
++ boolean onError(MediaPlayer,int,int)
+- int getRawResourceId(String)
++ void changeSong(String)
+}
+
+
+class com.shaked.crowns.MusicService$ServiceBinder {
+~ MusicService getService()
+}
+
+class com.shaked.crowns.Card {
+- int num
+- String shape
++ <<Create>> Card(int,String)
++ int getNum()
++ void setNum(int)
++ String getShape()
++ void setShape(String)
++ boolean equalsCard(Card)
++ boolean equalsNum(int)
++ String toString()
+}
+
+
+class com.shaked.crowns.MyCustomAdapter {
+- String[] songs
+- Context context
++ <<Create>> MyCustomAdapter(Context,String[])
++ int getCount()
++ String getItem(int)
++ long getItemId(int)
++ View getView(int,View,ViewGroup)
+}
+
+
+class com.shaked.crowns.MyCustomAdapter$ViewHolder {
+~ TextView textView
+}
+
+class com.shaked.crowns.BatteryReceiver {
++ void onReceive(Context,Intent)
+}
+
+class com.shaked.crowns.SettingsActivity {
+~ ImageButton btnRules
+~ ListView lView
+- {static} MyCustomAdapter adapter
+- MediaPlayer mWork
+~ ArrayList<String> songs
+- boolean mIsBound
+- MusicService mServ
+- ServiceConnection Scon
+~ void doBindService()
+~ void doUnbindService()
+# void onCreate(Bundle)
++ void openUrl(View)
++ boolean onCreateOptionsMenu(Menu)
++ boolean onOptionsItemSelected(MenuItem)
+# void onPause()
+# void onResume()
+}
+
+
+
+
+androidx.appcompat.app.AppCompatActivity <|-- com.shaked.crowns.MainActivity
+com.shaked.crowns.OnClickListener <|.. com.shaked.crowns.GameActivity
+androidx.appcompat.app.AppCompatActivity <|-- com.shaked.crowns.GameActivity
+androidx.appcompat.app.AppCompatActivity <|-- com.shaked.crowns.LoginActivity
+com.shaked.crowns.OnClickListener <|.. com.shaked.crowns.WinActivity
+androidx.appcompat.app.AppCompatActivity <|-- com.shaked.crowns.WinActivity
+android.database.sqlite.SQLiteOpenHelper <|-- com.shaked.crowns.DatabaseHelper
+androidx.appcompat.app.AppCompatActivity <|-- com.shaked.crowns.AboutMeActivity
+androidx.appcompat.app.AppCompatActivity <|-- com.shaked.crowns.StatActivity
+android.media.MediaPlayer.OnErrorListener <|.. com.shaked.crowns.MusicService
+android.app.Service <|-- com.shaked.crowns.MusicService
+com.shaked.crowns.MusicService +.. com.shaked.crowns.MusicService$ServiceBinder
+com.shaked.crowns.Binder <|-- com.shaked.crowns.MusicService$ServiceBinder
+android.widget.BaseAdapter <|-- com.shaked.crowns.MyCustomAdapter
+com.shaked.crowns.MyCustomAdapter +.. com.shaked.crowns.MyCustomAdapter$ViewHolder
+android.content.BroadcastReceiver <|-- com.shaked.crowns.BatteryReceiver
+androidx.appcompat.app.AppCompatActivity <|-- com.shaked.crowns.SettingsActivity
+@enduml

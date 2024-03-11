@@ -37,12 +37,11 @@ public class Deck {
                     break;
                 }
             }
-            this.deck.push(new Card(12,"s"));
-            this.deck.push(new Card(12,"s"));
-            this.deck.push(new Card(13,"d"));
-            this.deck.push(new Card(13,"d"));
-
         }
+        this.deck.push(new Card(12,"s"));
+        this.deck.push(new Card(12,"d"));
+        this.deck.push(new Card(13,"s"));
+        this.deck.push(new Card(13,"d"));
     }
 
 
@@ -84,11 +83,16 @@ public class Deck {
     @Override
     public String toString(){
         String str="{"+'\n';
+        Stack<Card> tempS = new Stack<Card>();
         for (int i =0;i<deck.size();i++){
             Card temp = this.deck.pop();
+            tempS.push(temp);
             str+=temp.toString()+'\n';
-            this.deck.push(temp);
         }
+        for(int i=0;tempS.size()>0;i++){
+            this.deck.push(tempS.pop());
+        }
+        str+="}";
         return str;
     }
 }

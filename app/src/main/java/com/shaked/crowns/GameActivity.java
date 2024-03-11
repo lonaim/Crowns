@@ -31,8 +31,8 @@ import android.os.Vibrator;
 public class GameActivity extends AppCompatActivity implements TextView.OnClickListener {
 
     /*תכונות*/
-    private CountDownTimer countDownTimer;
-    private TextView time,tvName1,tvName2;
+    private CountDownTimer countDownTimer;//timer
+    private TextView time,tvName1,tvName2;//textviews
     private ImageButton[] cardsP1; //מבצר של שחקן 1
     private ImageButton[] cardsP2; //מבצר של שחקן 2
     private ImageButton cardFromDeck; //קלף מהקופה
@@ -47,13 +47,12 @@ public class GameActivity extends AppCompatActivity implements TextView.OnClickL
     int num;
     String shape;
 
-    boolean isDone;
     Player p1, p2;
     String p1Name, p2Name;
 
     Intent in;
     private static final long VIBRATION_DURATION = 3000; // 3 seconds
-    private Vibrator vibrator;
+    private Vibrator vibrator;//vibration
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +90,6 @@ public class GameActivity extends AppCompatActivity implements TextView.OnClickL
         rePlace = 0;
         num = 0;
         shape = "";
-        isDone = false;
 
         /*connect with id in xml to arr in activity*/
         cardsP1 = new ImageButton[9];
@@ -211,78 +209,69 @@ public class GameActivity extends AppCompatActivity implements TextView.OnClickL
         boolean isTapDeck = game.getDeckCard() != null;
         int id = btn.getId();
         boolean doTurn = false;
-        Card cardPress = new Card(0, "");
 
-        if (R.id.deck == id) {
-            if (!isTapDeck && game.getDeckGame().getSize() < 1) {
+        if (R.id.deck == id) {//אם לחץ על הקופה
+            if (!isTapDeck && game.getDeckGame().getSize() < 1) {//אם אין קלפים בקופה
                 Toast.makeText(this, "The Deck is Empty! - the system resting the Deck", Toast.LENGTH_SHORT).show();
-                game.resetDeckAfterAllBurn();
-                game.pickCard();
-            } else if (!isTapDeck) {
+                game.resetDeckAfterAllBurn();//תאפס את הקופה
+                game.pickCard();//תבחר קלף
+            } else if (!isTapDeck) {//אם זה פעם ראשונה שהקופה נלחצה בתור
                 game.pickCard();
                 num = game.getDeckCard().getNum();
                 shape = game.getDeckCard().getShape();
 
                 res = cardFromDeck.getResources().getIdentifier("card" + shape + num, "drawable", getPackageName());
-                cardFromDeck.setBackgroundResource(res);
+                cardFromDeck.setBackgroundResource(res);//משנה את הטקסטורה של הקלף
             } else {
                 Toast.makeText(this, "You have card", Toast.LENGTH_SHORT).show();
             }
-        } else if (R.id.srufim == id) {
-            if (isTapDeck) {
+        } else if (R.id.srufim == id) {//לחץ על הקופת שרופים
+            if (isTapDeck) {//אם לחץ על הקופסה לפני
                 game.doBurn(game.getDeckCard());
                 game.setDeckCard(null);
                 doTurn = true;
-                ;
 
             } else {
                 Toast.makeText(this, "Take card from deck", Toast.LENGTH_LONG).show();
             }
-        } else {
-            if (isTapDeck) {
-                if (game.getK() == 0) {
+        } else {//לחץ על אחד הקלפים
+            if (isTapDeck) {//יש קלף
+                if (game.getK() == 0) {//אם זה תור שחקן1
                     for (int i = 0; i < cardsP1.length; i++) {
                         if (cardsP1[i] == view) {
                             if (game.makeATurn(i, 2)) doTurn = true;
-                            ;
                         }
                     }
 
                     for (int j = 0; j < cardsP2.length; j++) {
                         if (cardsP2[j] == view) {
                             if (game.makeATurn(j, 3)) doTurn = true;
-                            ;
                         }
                     }
-                } else {
+                } else {//תור שחקן2
                     for (int i = 0; i < cardsP2.length; i++) {
                         if (cardsP2[i] == view) {
                             if (game.makeATurn(i, 2)) doTurn = true;
-                            ;
-                            ;
                         }
                     }
 
                     for (int j = 0; j < cardsP1.length; j++) {
                         if (cardsP1[j] == view) {
                             if (game.makeATurn(j, 3)) doTurn = true;
-                            ;
-                            ;
                         }
                     }
                 }
             }
+            else {
+                Toast.makeText(this, "Take card from deck", Toast.LENGTH_LONG).show();
+            }
         }
-        reloadTexture();
-        /*if(doTurn)
-            Toast.makeText(this,game.getPlayerTurn().getName() + "'s Turn",Toast.LENGTH_SHORT).show();*/
-        isWon();
-        if (doTurn) {
+        reloadTexture();//מרענן את הטקסטורה
+        isWon();//האם בתור הזה מישהו נצח
+        if (doTurn) {//האם התרחש פעולה בתור
             game.nextTurn();
-            flipImageButton();
+            flipImageButton();//סובב את הקלפים
         }
-        ;
-
     }
 
     //פעולה שעוברת אקטיביטי עם יש ניצחון ומעבירה את שם המנצח
@@ -300,13 +289,16 @@ public class GameActivity extends AppCompatActivity implements TextView.OnClickL
         }
     }
 
+    //פעולה שמסובבת את הקלפים ב-180 מעלות לפי מי שתורו לנוחות
     private void flipImageButton() {
         int deg;
-        if (isFlipped) {
+        if (isFlipped) {//אם כבר סובב בתור הקודם
             deg = 0;
         } else {
             deg = 180;// Rotate 180 degrees
         }
+
+        //מסובב הכל
         deck.setRotation(deg);
         srufim.setRotation(deg);
         for (int i = 0; i < cardsP1.length; i++) {
@@ -315,7 +307,7 @@ public class GameActivity extends AppCompatActivity implements TextView.OnClickL
         for (int j = 0; j < cardsP2.length; j++) {
             cardsP2[j].setRotation(deg);
         }
-        isFlipped = !isFlipped; // Toggle the flipped state
+        isFlipped = !isFlipped; // משנה את מצב ה-"אם סובב"
     }
 
     private void vibrateDevice() {
@@ -326,16 +318,17 @@ public class GameActivity extends AppCompatActivity implements TextView.OnClickL
     }
 
 
+    //פעולת טיימר שמשנה את הניראות של הטיימר במסך ופעולת בהתאם
     private void startCountdown() {
-        countDownTimer = new CountDownTimer(20 * 60 * 1000, 1000) {
+        countDownTimer = new CountDownTimer(20 * 60 * 1000, 1000) {//יוצר טיימר של 20 דקות
             @Override
-            public void onTick(long millisUntilFinished) {
+            public void onTick(long millisUntilFinished) {//כל טיק
                 long minutes = millisUntilFinished / 1000 / 60;
                 long seconds = (millisUntilFinished / 1000) % 60;
 
-                time.setText(String.format("%02d:%02d", minutes, seconds));
+                time.setText(String.format("%02d:%02d", minutes, seconds));//משנה את הניראות של הטיימר
 
-                if(minutes<1){
+                if(minutes<1){//אם נשאר דקה
                     Animation shakeAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake_animation);
                     time.startAnimation(shakeAnimation);
                     vibrateDevice();
@@ -343,11 +336,11 @@ public class GameActivity extends AppCompatActivity implements TextView.OnClickL
             }
 
             @Override
-            public void onFinish() {
+            public void onFinish() {//אם הזמן נגמר
                 time.setText("00:00");
                 Intent go = new Intent(GameActivity.this, WinActivity.class);
                 go.putExtra("TIMER_END",true );
-                startActivity(go);
+                startActivity(go);//עבור למסך התוצאות
             }
         };
         countDownTimer.start();

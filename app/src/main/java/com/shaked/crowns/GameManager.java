@@ -94,6 +94,10 @@ public class GameManager {
     public Deck getDeckGame(){
         return this.gameDeck;
     }
+    public Deck getBurnGame(){
+        return this.burnDeck;
+    }
+
 
     //update the name of the players
     public void setPlayersName(String p1, String p2) {

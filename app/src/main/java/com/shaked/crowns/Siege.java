@@ -76,7 +76,7 @@ public class Siege {
                 temp[count] = new Tower(c);
                 count++;
             }
-        }
+        } 
 
 
         //למלות את השורות
