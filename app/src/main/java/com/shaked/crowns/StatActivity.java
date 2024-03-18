@@ -70,6 +70,14 @@ public class StatActivity extends AppCompatActivity {
             MenuBuilder mb = (MenuBuilder) menu;
             mb.setOptionalIconsVisible(true);
         }
+        if (MainActivity.isPlaying) {
+            MainActivity.mServ.resumeMusic();
+            menu.findItem(R.id.btnMute).setIcon(R.drawable.unmute);
+        }
+        else {
+            MainActivity.mServ.pauseMusic();
+            menu.findItem(R.id.btnMute).setIcon(R.drawable.mute);
+        }
         return true;
     }
 
@@ -115,11 +123,20 @@ public class StatActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
     protected void onResume() {
         super.onResume();
-        if(MainActivity.mServ != null) {
+        if (MainActivity.mServ != null) {
             MainActivity.mServ.resumeMusic();
+            if (MainActivity.isPlaying) {
+                MainActivity.mServ.resumeMusic();
+            } else {
+                MainActivity.mServ.pauseMusic();
+            }
         }
+    }
+
+    protected void onPause() {
+        super.onPause();
+        MainActivity.mServ.pauseMusic();
     }
 }

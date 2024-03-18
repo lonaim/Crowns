@@ -89,4 +89,21 @@ public class WinActivity extends AppCompatActivity implements TextView.OnClickLi
             finish();
         }
     }
+
+    protected void onResume() {
+        super.onResume();
+        if (MainActivity.mServ != null) {
+            MainActivity.mServ.resumeMusic();
+            if (MainActivity.isPlaying) {
+                MainActivity.mServ.resumeMusic();
+            } else {
+                MainActivity.mServ.pauseMusic();
+            }
+        }
+    }
+
+    protected void onPause() {
+        super.onPause();
+        MainActivity.mServ.pauseMusic();
+    }
 }

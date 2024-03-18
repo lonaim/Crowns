@@ -146,4 +146,8 @@ public class MusicService extends Service  implements OnErrorListener {
         // Specify the raw resource identifier for the new song
         playMusic();
     }
+
+    public boolean isPlaying() {
+        return mPlayer.isPlaying();
+    }
 }

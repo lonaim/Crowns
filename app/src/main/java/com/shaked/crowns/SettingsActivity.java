@@ -89,6 +89,8 @@ public class SettingsActivity extends AppCompatActivity {
                         mServ.changeSong("medievalfantasy");
                         break;
                 }
+                if(MainActivity.isPlaying) mServ.resumeMusic();
+                else mServ.pauseMusic();
             }
         });
 
@@ -116,6 +118,14 @@ public class SettingsActivity extends AppCompatActivity {
         if (menu instanceof MenuBuilder) {
             MenuBuilder mb = (MenuBuilder) menu;
             mb.setOptionalIconsVisible(true);
+        }
+        if (MainActivity.isPlaying) {
+            MainActivity.mServ.resumeMusic();
+            menu.findItem(R.id.btnMute).setIcon(R.drawable.unmute);
+        }
+        else {
+            MainActivity.mServ.pauseMusic();
+            menu.findItem(R.id.btnMute).setIcon(R.drawable.mute);
         }
         return true;
     }
@@ -162,7 +172,6 @@ public class SettingsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
     protected void onPause() {
         super.onPause();
@@ -174,6 +183,13 @@ public class SettingsActivity extends AppCompatActivity {
         super.onResume();
         if(MainActivity.mServ != null) {
             MainActivity.mServ.resumeMusic();
+            if (MainActivity.isPlaying) {
+                MainActivity.mServ.resumeMusic();
+            }
+            else {
+                MainActivity.mServ.pauseMusic();
+            }
         }
     }
+
 }
