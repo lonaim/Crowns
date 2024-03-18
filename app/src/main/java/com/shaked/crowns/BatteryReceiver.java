@@ -11,7 +11,7 @@ public class BatteryReceiver extends BroadcastReceiver {
 
         int level = intent.getIntExtra("level", 0);
 
-        if (level < 51) {
+        if (level < 30) {
             Toast.makeText(context, "The Battery is Low", Toast.LENGTH_SHORT).show();
 
         }

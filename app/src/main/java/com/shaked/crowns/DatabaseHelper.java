@@ -8,22 +8,23 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    public static final String DB_NAME = "wars.db";
+    public static final String DB_NAME = "wars.db";// Database Name
     public static final int DB_VERSION = 1;
 
-    public static final String TABLE_NAME = "wars_table";
+    public static final String TABLE_NAME = "wars_table";// Table Name
 
-    public static final String COL_P1ID = "PLAYER1_ID";
-    public static final String COL_P1SCORE = "PLAYER1_SCORE";
-    public static final String COL_P2ID = "PLAYER2_ID";
-    public static final String COL_P2SCORE = "PLAYER2_SCORE";
+    public static final String COL_P1ID = "PLAYER1_ID";// Column I
+    public static final String COL_P1SCORE = "PLAYER1_SCORE";// Column II
+    public static final String COL_P2ID = "PLAYER2_ID";// Column III
+    public static final String COL_P2SCORE = "PLAYER2_SCORE";// Column IV
 
+    /*=פעולה בונה=*/
     public DatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
-      //  SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase();
     }
        @Override
-    public void onCreate(SQLiteDatabase db) {
+    public void onCreate(SQLiteDatabase db) {// Creating Tables
         db.execSQL("CREATE TABLE " + TABLE_NAME + "(" + COL_P1ID + " TEXT," + COL_P1SCORE + " TEXT," + COL_P2ID + " TEXT," + COL_P2SCORE + " TEXT" + ")");
 
     }
@@ -32,7 +33,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
     }
 
-    public boolean insertData(War war) {
+    public boolean insertData(War war) {// Inserting Data
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_P1ID, war.getP1Name());
@@ -47,13 +48,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
     }
-    public Cursor getAllData(){
+    public Cursor getAllData(){// Getting All Data
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
         return res;
     }
 
-    public boolean updateData(War war){
+    public boolean updateData(War war){// Updating Data
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_P1ID, war.getP1Name());
@@ -68,12 +69,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.update(TABLE_NAME, contentValues, whereClause, whereArgs);
         return true;
     }
-    public Integer deleteData (){
+    public Integer deleteData (){// Deleting Data
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_NAME, null, null);
     }
 
-    public boolean dataExists(String player1,String player2) {
+    public boolean dataExists(String player1,String player2) {// Checking if data exists
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COL_P1ID + " = ? AND " + COL_P2ID + " = ?", new String[]{player1, player2});
         boolean exists = (cursor.getCount() > 0);
@@ -81,7 +82,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return exists;
     }
 
-    public Cursor getDataCursor(String p1Name, String p2Name) {
+    public Cursor getDataCursor(String p1Name, String p2Name) {// Getting Data by 2 names
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COL_P1ID + " = ? AND " + COL_P2ID + " = ?", new String[]{p1Name, p2Name});
         return cursor;

@@ -68,6 +68,6 @@
         app:layout_constraintHorizontal_bias="0.32"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/biglogo" />
+        app:srcCompat="@drawable/bglogo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

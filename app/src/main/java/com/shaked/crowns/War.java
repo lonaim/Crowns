@@ -1,11 +1,12 @@
 package com.shaked.crowns;
 
 public class War {
-    private String p1Name;
-    private String p2Name;
-    private int p1Scor;
-    private int p2Scor;
+    private String p1Name;//שם שחקן 1
+    private String p2Name;//שם שחקן 2
+    private int p1Scor;//נצחונות של שחקן 1
+    private int p2Scor;//נצחונות של שחקן 2
 
+    /*==פעולות בונות==*/
     public War(String p1Name, String p2Name,int p1Scor, int p2Scor) {
         this.p1Name = p1Name;
         this.p2Name = p2Name;
@@ -13,6 +14,7 @@ public class War {
         this.p2Scor = p2Scor;
     }
 
+    //כשהמשתמשים לא קיימים
     public War(String p1Name, String p2Name) {
         this.p1Name = p1Name;
         this.p2Name = p2Name;
@@ -52,6 +54,7 @@ public class War {
         this.p2Scor = p2Scor;
     }
 
+    //אם המלחמה דומה
     public boolean isSameWar(War war) {
         return p1Name.equals(war.p1Name) && p2Name.equals(war.p2Name);
     }

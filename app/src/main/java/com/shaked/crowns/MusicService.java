@@ -11,11 +11,10 @@ import android.widget.Toast;
 public class MusicService extends Service  implements OnErrorListener {
 
     private final IBinder mBinder = new ServiceBinder();
-    MediaPlayer mPlayer;
-    private int length = 0;
-    private static final String DEFAULT_SONG = "musicmf";
-    private String currentSong = DEFAULT_SONG;
-
+    private static MediaPlayer mPlayer; //media player
+    private int length = 0;//length of the song
+    private static final String DEFAULT_SONG = "musicmf";//default song
+    private String currentSong = DEFAULT_SONG;//current song
 
     public MusicService() {
     }
@@ -29,12 +28,12 @@ public class MusicService extends Service  implements OnErrorListener {
     @Override
     public IBinder onBind(Intent arg0) {
         return mBinder;
-    }
+    }//onBind
 
     @Override
-    public void onCreate() {
+    public void onCreate() {//when service is created
         super.onCreate();
-        int rawResourceId = getRawResourceId(currentSong);
+        int rawResourceId = getRawResourceId(currentSong);//get raw resource id of current song
 
         // Create MediaPlayer with the raw resource
         mPlayer = MediaPlayer.create(this, rawResourceId);
@@ -42,7 +41,7 @@ public class MusicService extends Service  implements OnErrorListener {
         // Now you can start or perform other operations on the MediaPlayer
         mPlayer.start();
 
-        if (mPlayer != null) {
+        if (mPlayer != null) {//if media player is not null
             mPlayer.setLooping(true);
             mPlayer.setVolume(100, 100);
         }
@@ -60,12 +59,12 @@ public class MusicService extends Service  implements OnErrorListener {
     }
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
+    public int onStartCommand(Intent intent, int flags, int startId) {//when service is started
         mPlayer.start();
         return START_NOT_STICKY;
     }
 
-    public void pauseMusic() {
+    public void pauseMusic() {//pause music
         if (mPlayer.isPlaying()) {
             mPlayer.pause();
             length = mPlayer.getCurrentPosition();
@@ -73,18 +72,18 @@ public class MusicService extends Service  implements OnErrorListener {
         }
     }
 
-    public void resumeMusic() {
+    public void resumeMusic() {//resume music
         if (mPlayer.isPlaying() == false) {
             mPlayer.seekTo(length);
             mPlayer.start();
         }
     }
 
-    public void playMusic() {
+    public void playMusic() {//play music
         int rawResourceId = getRawResourceId(currentSong);
 
         // Create MediaPlayer with the raw resource
-        mPlayer = MediaPlayer.create(this, rawResourceId);
+        mPlayer = MediaPlayer.create(this, rawResourceId);//create media player gor the raw resource
 
         // Now you can start or perform other operations on the MediaPlayer
         mPlayer.start();
@@ -114,9 +113,9 @@ public class MusicService extends Service  implements OnErrorListener {
         }
     }
 
-    public boolean onError(MediaPlayer mp, int what, int extra) {
+    public boolean onError(MediaPlayer mp, int what, int extra) {//on error
 
-        Toast.makeText(this, "music player failed", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "music player failed", Toast.LENGTH_SHORT).show();//show toast
         if (mPlayer != null) {
             try {
                 mPlayer.stop();
@@ -134,7 +133,7 @@ public class MusicService extends Service  implements OnErrorListener {
     }
 
     // Method to change the song
-    public void changeSong(String newSong) {
+    public void changeSong(String newSong) {//change song
         // Stop and release the current MediaPlayer
         if (mPlayer != null) {
             mPlayer.stop();
@@ -147,6 +146,4 @@ public class MusicService extends Service  implements OnErrorListener {
         // Specify the raw resource identifier for the new song
         playMusic();
     }
-
-    
 }

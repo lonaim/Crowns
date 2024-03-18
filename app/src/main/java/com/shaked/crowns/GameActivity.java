@@ -5,18 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.MenuBuilder;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.service.autofill.OnClickAction;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -329,8 +325,8 @@ public class GameActivity extends AppCompatActivity implements TextView.OnClickL
                 time.setText(String.format("%02d:%02d", minutes, seconds));//משנה את הניראות של הטיימר
 
                 if(minutes<1){//אם נשאר דקה
-                    Animation shakeAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake_animation);
-                    time.startAnimation(shakeAnimation);
+                    Animation vibratAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.vibrat_animation);
+                    time.startAnimation(vibratAnimation);
                     vibrateDevice();
                 }
             }
