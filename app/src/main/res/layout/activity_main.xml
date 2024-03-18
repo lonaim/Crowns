@@ -4,70 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bgmain"
     tools:context=".MainActivity">
 
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnGame"
-        android:layout_width="wrap_content"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="96dp"
-        android:background="@color/white"
-        android:fontFamily="@font/crownsfont"
-        android:gravity="center"
-        android:padding="15dp"
-        android:text="TO WAR!"
-        android:textColor="#015515"
-        android:textSize="35dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnStat"
-        android:layout_width="125dp"
-        android:layout_height="70dp"
-        android:layout_marginHorizontal="50dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/white"
-        android:fontFamily="@font/crownsfont"
-        android:gravity="center"
-        android:padding="15dp"
-        android:text="STATS"
-        android:textColor="#015515"
-        android:textSize="35dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnGame" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnSettings"
-        android:layout_width="125dp"
-        android:layout_height="70dp"
-        android:layout_marginHorizontal="50dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/white"
-        android:fontFamily="@font/crownsfont"
-        android:gravity="center"
-        android:padding="15dp"
-        android:text="Settings"
-        android:textColor="#015515"
-        android:textSize="35dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnStat" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="397dp"
-        android:layout_height="164dp"
-        android:layout_marginTop="80dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.32"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/bglogo" />
+        android:background="#084328"/>
+
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

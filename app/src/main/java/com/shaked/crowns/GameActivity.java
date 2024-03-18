@@ -351,6 +351,14 @@ public class GameActivity extends AppCompatActivity implements TextView.OnClickL
             MenuBuilder mb = (MenuBuilder) menu;
             mb.setOptionalIconsVisible(true);
         }
+        if (MainActivity.isPlaying) {
+            MainActivity.mServ.resumeMusic();
+            menu.findItem(R.id.btnMute).setIcon(R.drawable.unmute);
+        }
+        else {
+            MainActivity.mServ.pauseMusic();
+            menu.findItem(R.id.btnMute).setIcon(R.drawable.mute);
+        }
         return true;
     }
 
@@ -406,8 +414,13 @@ public class GameActivity extends AppCompatActivity implements TextView.OnClickL
     @Override
     protected void onResume() {
         super.onResume();
-        if(MainActivity.mServ != null) {
+        if (MainActivity.mServ != null) {
             MainActivity.mServ.resumeMusic();
+            if (MainActivity.isPlaying) {
+                MainActivity.mServ.resumeMusic();
+            } else {
+                MainActivity.mServ.pauseMusic();
+            }
         }
     }
 }
