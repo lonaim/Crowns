@@ -74,14 +74,6 @@ public class LoginFrag extends Fragment {
             }
         });
 
-        btnBack = view.findViewById(R.id.btnBack);
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), MainActivity.class);
-                startActivity(intent);
-            }
-        });
-
         return view;
     }
 }
