@@ -26,7 +26,6 @@ public class AboutMeActivity extends AppCompatActivity {
     InputStream is;
     InputStreamReader isr;
     BufferedReader br;
-    Button btBack;
     Intent intent;
 
     @Override
@@ -72,6 +71,11 @@ public class AboutMeActivity extends AppCompatActivity {
             MainActivity.mServ.pauseMusic();
             menu.findItem(R.id.btnMute).setIcon(R.drawable.mute);
         }
+
+        // Hide the "About" option
+        MenuItem aboutItem = menu.findItem(R.id.About);
+        aboutItem.setVisible(false);
+
         return true;
     }
 
@@ -107,11 +111,6 @@ public class AboutMeActivity extends AppCompatActivity {
                             startActivity(go);
                         }
                     })/*.setIcon(R.drawable.btnback)*/.show();
-        }
-
-        if (id == R.id.About) {
-            Intent go = new Intent(this, AboutMeActivity.class);
-            startActivity(go);
         }
 
         return super.onOptionsItemSelected(item);

@@ -1,0 +1,251 @@
+@startuml
+class com.shaked.crowns.MainActivity {
+~ ViewPager2 viewPager
+~ MyViewPagerAdapter myAdapter
+- boolean mIsBound
++ {static} boolean isPlaying
++ {static} MusicService mServ
+- ServiceConnection Scon
+~ void doBindService()
+~ void doUnbindService()
+# void onCreate(Bundle)
++ boolean onCreateOptionsMenu(Menu)
++ boolean onOptionsItemSelected(MenuItem)
+# void onPause()
+# void onResume()
+}
+
+
+class com.shaked.crowns.Player {
+- String name
+- Siege siege
++ <<Create>> Player(String,Siege)
++ String getName()
++ void setName(String)
++ Siege getSiege()
++ void setSiege(Siege)
++ boolean isFinalRound()
++ String toString()
+}
+
+
+class com.shaked.crowns.Siege {
+- ArrayList<Tower> qk
+- ArrayList<Tower> line1
+- ArrayList<Tower> line2
++ <<Create>> Siege(Card,Card,Deck)
++ ArrayList<Tower> getQk()
++ ArrayList<Tower> getLine1()
++ ArrayList<Tower> getLine2()
+- void fillSiege(Deck)
+- int finalPlace(Tower[])
+- boolean exist(Tower[],Card)
+- int foundPlace(Tower[],Card)
++ boolean isLine1Empty()
++ boolean isLine2Empty()
++ boolean isLineQKEmpty()
++ boolean isEmpty()
++ String toString()
+}
+
+
+class com.shaked.crowns.GameActivity {
+- CountDownTimer countDownTimer
+- TextView time
+- ImageButton[] cardsP1
+- ImageButton[] cardsP2
+- ImageButton cardFromDeck
+- ImageButton deck
+- boolean isFlipped
+- ImageButton srufim
++ {static} GameManager game
+~ int rePlace
+~ int num
+~ String shape
+~ Player p1
+~ String p1Name
+~ Intent in
+- {static} long VIBRATION_DURATION
+- Vibrator vibrator
+# void onCreate(Bundle)
++ void reloadTexture()
++ void onClick(View)
++ void isWon()
+- void flipImageButton()
+- void vibrateDevice()
+- void startCountdown()
++ boolean onCreateOptionsMenu(Menu)
++ boolean onOptionsItemSelected(MenuItem)
+# void onPause()
+# void onResume()
+}
+
+
+class com.shaked.crowns.WinActivity {
+- Intent in
+- DatabaseHelper myDb
+- String playerWinName
+- String playerLoseName
+- boolean timerEnd
+- War war
+- TextView tvPlayerName
+- Button btnAgain
+# void onCreate(Bundle)
++ void onClick(View)
+# void onResume()
+# void onPause()
+}
+
+
+class com.shaked.crowns.GameManager {
+- Player[] players
+~ int kTurn
+- Deck gameDeck
+- Deck burnDeck
+- Card deckCard
+- Activity activity
++ <<Create>> GameManager(Activity)
++ void resetGame()
++ String deckCardToString()
++ Player[] getPlayers()
++ void setPlayers(Player[])
++ int getK()
++ void setK(int)
++ void setDeckCard(Card)
++ Card getDeckCard()
++ Player getPlayerTurn()
++ Player getPlayerNotTurn()
++ Player getPlayer(int)
++ Deck getDeckGame()
++ Deck getBurnGame()
++ void setPlayersName(String,String)
++ void nextTurn()
++ void pickCard()
++ void doBurn(Card)
++ void resetDeckAfterAllBurn()
++ boolean makeATurn(int,int)
++ Card returnCard(int,int)
++ String giveCard(int,int)
+}
+
+
+class com.shaked.crowns.Deck {
+- Stack<Card> deck
++ <<Create>> Deck()
++ int getSize()
++ void fill()
++ void addCard(Card)
++ Card removeCard()
++ void shuffle()
++ String toString()
+}
+
+
+class com.shaked.crowns.StatActivity {
+~ DatabaseHelper myDb
+~ TextView tableRowPlayer
+~ Button btnDel
+# void onCreate(Bundle)
++ void relodTab()
++ boolean onCreateOptionsMenu(Menu)
++ boolean onOptionsItemSelected(MenuItem)
+# void onResume()
+# void onPause()
+}
+
+
+class com.shaked.crowns.Tower {
+- Stack<Card> cards
++ <<Create>> Tower(Card)
++ Stack<Card> getCards()
++ void setCards(Stack<Card>)
++ Card getCard()
++ int getSize()
++ void addCard(Card)
++ Card removeCard()
++ boolean isFull()
++ String toString()
+}
+
+
+class com.shaked.crowns.LoginFrag {
+- DatabaseHelper myDb
+~ Button btnWar
+~ EditText etP1Name
+~ boolean clickTwice
++ <<Create>> LoginFrag()
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+}
+
+
+class com.shaked.crowns.War {
+- String p1Name
+- String p2Name
+- int p1Scor
+- int p2Scor
++ <<Create>> War(String,String,int,int)
++ <<Create>> War(String,String)
++ String getP1Name()
++ void setP1Name(String)
++ String getP2Name()
++ void setP2Name(String)
++ int getP1Scor()
++ void setP1Scor(int)
++ int getP2Scor()
++ void setP2Scor(int)
++ boolean isSameWar(War)
++ String toString()
+}
+
+
+class com.shaked.crowns.Card {
+- int num
+- String shape
++ <<Create>> Card(int,String)
++ int getNum()
++ void setNum(int)
++ String getShape()
++ void setShape(String)
++ boolean equalsCard(Card)
++ boolean equalsNum(int)
++ String toString()
+}
+
+
+class com.shaked.crowns.MainFrag {
++ <<Create>> MainFrag()
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+}
+
+class com.shaked.crowns.SettingsActivity {
+~ ImageButton btnRules
+~ ListView lView
+- {static} MyCustomAdapter adapter
+- MediaPlayer mWork
+~ ArrayList<String> songs
+- boolean mIsBound
+- MusicService mServ
+- ServiceConnection Scon
+~ void doBindService()
+~ void doUnbindService()
+# void onCreate(Bundle)
++ void openUrl(View)
++ boolean onCreateOptionsMenu(Menu)
++ boolean onOptionsItemSelected(MenuItem)
+# void onPause()
+# void onResume()
+}
+
+
+
+
+androidx.appcompat.app.AppCompatActivity <|-- com.shaked.crowns.MainActivity
+com.shaked.crowns.OnClickListener <|.. com.shaked.crowns.GameActivity
+androidx.appcompat.app.AppCompatActivity <|-- com.shaked.crowns.GameActivity
+com.shaked.crowns.OnClickListener <|.. com.shaked.crowns.WinActivity
+androidx.appcompat.app.AppCompatActivity <|-- com.shaked.crowns.WinActivity
+androidx.appcompat.app.AppCompatActivity <|-- com.shaked.crowns.StatActivity
+androidx.fragment.app.Fragment <|-- com.shaked.crowns.LoginFrag
+androidx.fragment.app.Fragment <|-- com.shaked.crowns.MainFrag
+androidx.appcompat.app.AppCompatActivity <|-- com.shaked.crowns.SettingsActivity
+@enduml

@@ -6,6 +6,7 @@ import androidx.appcompat.view.menu.MenuBuilder;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -107,7 +108,12 @@ public class SettingsActivity extends AppCompatActivity {
         // Replace the URL with your desired URL
         String url = "https://docs.google.com/presentation/d/1EINGutdJT0P2vyYOQlnGDGbCqcZY7I4z/edit#slide=id.p1";
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        startActivity(intent);
+        try {
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            // Handle the case where the activity to handle the intent is not found
+            Toast.makeText(this, "Cannot open URL. Please make sure you have an internet connection and try again.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @SuppressLint("RestrictedApi")
