@@ -75,7 +75,9 @@ public class GameActivity extends AppCompatActivity implements TextView.OnClickL
         if (in != null && in.getExtras() != null) {
             Bundle xtras = in.getExtras();
             p1Name = xtras.getString("P1");
+            tvName1.setTextSize(32);
             p2Name = xtras.getString("P2");
+            tvName2.setTextSize(20);
         }
         p1 = new Player(p1Name, game.getPlayer(0).getSiege());
         p2 = new Player(p2Name, game.getPlayer(1).getSiege());
@@ -290,13 +292,19 @@ public class GameActivity extends AppCompatActivity implements TextView.OnClickL
         int deg;
         if (isFlipped) {//אם כבר סובב בתור הקודם
             deg = 0;
+            tvName1.setTextSize(32);
+            tvName2.setTextSize(20);
         } else {
             deg = 180;// Rotate 180 degrees
+            tvName1.setTextSize(20);
+            tvName2.setTextSize(32);
         }
 
         //מסובב הכל
         deck.setRotation(deg);
         srufim.setRotation(deg);
+        tvName1.setRotation(deg);
+        tvName2.setRotation(deg);
         for (int i = 0; i < cardsP1.length; i++) {
             cardsP1[i].setRotation(deg);
         }
