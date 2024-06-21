@@ -44,6 +44,12 @@ public class Deck {
         this.deck.push(new Card(13,"d"));
     }
 
+    public void burnAll(){
+        while(!this.deck.isEmpty()){
+            this.removeCard();
+        }
+    }
+
 
     //מוסיפה קלף
     public void addCard(Card card){
@@ -82,9 +88,11 @@ public class Deck {
 
     @Override
     public String toString(){
-        String str="{"+'\n';
+        String str="{";
         Stack<Card> tempS = new Stack<Card>();
-        for (int i =0;i<deck.size();i++){
+        str+="deck - size: "+deck.size()+"\n";
+        int deckSize= deck.size();
+        for (int i =0;i<deckSize;i++){
             Card temp = this.deck.pop();
             tempS.push(temp);
             str+=temp.toString()+'\n';

@@ -13,6 +13,7 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -108,7 +109,6 @@ public class GameActivity extends AppCompatActivity implements TextView.OnClickL
         reloadTexture();
 
         registerReceiver(new BatteryReceiver(), new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
-
     }
 
     public void reloadTexture() {
@@ -209,6 +209,7 @@ public class GameActivity extends AppCompatActivity implements TextView.OnClickL
         boolean doTurn = false;
 
         if (R.id.deck == id) {//אם לחץ על הקופה
+            Log.e("deck", game.getDeckGame().toString());
             if (!isTapDeck && game.getDeckGame().getSize() < 1) {//אם אין קלפים בקופה
                 Toast.makeText(this, "The Deck is Empty! - the system resting the Deck", Toast.LENGTH_SHORT).show();
                 game.resetDeckAfterAllBurn();//תאפס את הקופה

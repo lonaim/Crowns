@@ -22,6 +22,7 @@ public class GameManager {
         this.gameDeck = new Deck();
         this.gameDeck.shuffle();
         this.burnDeck = new Deck();
+        this.burnDeck.burnAll();
         this.deckCard = null;
         this.players = new Player[2];
         players[0] = new Player("Player 1", new Siege(new Card(13,"c"), new Card(12,"c"), gameDeck));
@@ -33,6 +34,7 @@ public class GameManager {
         this.gameDeck = new Deck();
         this.gameDeck.shuffle();
         this.burnDeck = new Deck();
+        this.burnDeck.burnAll();
         this.deckCard = null;
         this.players = new Player[2];
         players[0] = new Player(players[0].getName(), new Siege(new Card(12,"c"), new Card(11,"c"), gameDeck));
@@ -139,7 +141,7 @@ public class GameManager {
         ArrayList<Tower> enemyLine;
         Card attackCard;
 
-        if (deckCard != null && gameDeck.getSize() != 0) {
+        if (deckCard != null) {
             if (i < 3) {/*line 1*/
                 line = getPlayerTurn().getSiege().getLine1();
                 enemyLine = getPlayerNotTurn().getSiege().getLine1();

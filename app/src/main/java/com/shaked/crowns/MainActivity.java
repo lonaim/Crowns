@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
             MenuBuilder mb = (MenuBuilder) menu;
             mb.setOptionalIconsVisible(true);
         }
+        if(mServ != null) {
         if (MainActivity.isPlaying) {
             MainActivity.mServ.resumeMusic();
             menu.findItem(R.id.btnMute).setIcon(R.drawable.unmute);
@@ -105,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         else {
             MainActivity.mServ.pauseMusic();
             menu.findItem(R.id.btnMute).setIcon(R.drawable.mute);
-        }
+        }}
         return true;
     }
 
