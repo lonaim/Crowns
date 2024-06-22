@@ -127,7 +127,8 @@ public class GameManager {
     //use - reset the deck after all burn
     //move all the cards from the burn deck to the game deck
     public void resetDeckAfterAllBurn() {
-        for(int i=0;i<burnDeck.getSize();i++){
+        int size = burnDeck.getSize();
+        for(int i=0;i<size;i++){
             gameDeck.addCard(burnDeck.removeCard());
         }
         gameDeck.shuffle();
@@ -191,15 +192,17 @@ public class GameManager {
                             }
                         }
                     case 3:
-                        if (deckCard.getNum() - enemyLine.get(i-3).getCard().getNum() == 1 || (deckCard.equalsNum(1) && deckCard.getNum() - enemyLine.get(i-3).getCard().getNum() == -12)) {
-                            doBurn(enemyLine.get(i-3).removeCard());
+                        if(!enemyLine.get(i-3).getCard().equalsNum(0)){
+                        if (deckCard.getNum() - enemyLine.get(i - 3).getCard().getNum() == 1 || (deckCard.equalsNum(1) && deckCard.getNum() - enemyLine.get(i - 3).getCard().getNum() == -12)) {
+                            doBurn(enemyLine.get(i - 3).removeCard());
                             doBurn(deckCard);
                             deckCard = null;
-                            if (enemyLine.get(i-3).getSize() == 0) {
-                                enemyLine.get(i-3).addCard(new Card(0, ""));
+                            if (enemyLine.get(i - 3).getSize() == 0) {
+                                enemyLine.get(i - 3).addCard(new Card(0, ""));
                             }
                             return true;
                         }
+                    }
                 }
             }
             if (i >= 7 && i < 9) {/*line 3*/

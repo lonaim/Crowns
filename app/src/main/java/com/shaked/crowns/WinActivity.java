@@ -54,7 +54,6 @@ public class WinActivity extends AppCompatActivity implements TextView.OnClickLi
             war = new War(res.getString(0),res.getString(2),Integer.parseInt(res.getString(1)),Integer.parseInt(res.getString(3)));
             }
             war.setP1Scor(war.getP1Scor()+1);
-            Toast.makeText(this, "War like this Exists", Toast.LENGTH_SHORT).show();
         }
         else{
             Cursor res = myDb.getDataCursor(playerLoseName,playerWinName);
@@ -62,7 +61,6 @@ public class WinActivity extends AppCompatActivity implements TextView.OnClickLi
                 war = new War(res.getString(0), res.getString(2), Integer.parseInt(res.getString(1)), Integer.parseInt(res.getString(3)));
             }
             war.setP2Scor(war.getP2Scor()+1);
-            Toast.makeText(this, "War like this Exists", Toast.LENGTH_SHORT).show();
         }
 
         myDb.updateData(war);

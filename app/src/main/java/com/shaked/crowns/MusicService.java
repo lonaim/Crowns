@@ -39,9 +39,9 @@ public class MusicService extends Service  implements OnErrorListener {
         mPlayer = MediaPlayer.create(this, rawResourceId);
 
         // Now you can start or perform other operations on the MediaPlayer
-        mPlayer.start();
 
         if (mPlayer != null) {//if media player is not null
+            mPlayer.start();
             mPlayer.setLooping(true);
             mPlayer.setVolume(100, 100);
         }
