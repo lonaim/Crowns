@@ -61,7 +61,7 @@ public class MusicService extends Service  implements OnErrorListener {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {//when service is started
         mPlayer.start();
-        return START_NOT_STICKY;
+        return START_STICKY;
     }
 
     public void pauseMusic() {//pause music
