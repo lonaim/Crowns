@@ -209,7 +209,7 @@ public class GameActivity extends AppCompatActivity implements TextView.OnClickL
         boolean doTurn = false;
 
         if (R.id.deck == id) {//אם לחץ על הקופה
-            Log.e("Bdeck", game.getBurnGame().toString());
+            //Log.e("Bdeck", game.getBurnGame().toString());
             if (!isTapDeck && game.getDeckGame().getSize() < 1) {//אם אין קלפים בקופה
                 Toast.makeText(this, "The Deck is Empty! - the system resting the Deck", Toast.LENGTH_SHORT).show();
                 game.resetDeckAfterAllBurn();//תאפס את הקופה
